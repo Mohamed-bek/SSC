@@ -50,3 +50,30 @@ export const AddParticipant = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+export const GetParticipants = async (req, res) => {
+  try {
+    const { limit = 10, page = 1, status } = req.query;
+    let filter = {};
+    if (status) filter.status = status;
+    const participants = await Participant.find(filter)
+      .skip(limit * (page - 1))
+      .limit(limit);
+    res.status(200).json({ participants });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const ParticipantStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+    const participant = await Participant.findById(id);
+    participant.status = status;
+    await participant.save();
+    res.status(200).json({ participant });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};

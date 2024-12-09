@@ -1,34 +1,37 @@
+import axios from 'axios';
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 
 const ParticipantsList = () => {
   const [participants, setParticipants] = useState([
-    {
-      id: 1,
-      firstName: 'John',
-      lastName: 'Doe',
-      email: 'john.doe@example.com',
-      phoneNumber: '+1 (555) 123-4567',
-      status: 'pending'
-    },
-    {
-      id: 2,
-      firstName: 'Jane',
-      lastName: 'Smith',
-      email: 'jane.smith@example.com',
-      phoneNumber: '+1 (555) 987-6543',
-      status: 'pending'
-    }
+   
   ]);
 
-  const handleAccept = (id) => {
+  const getParticipants = async () => {
+    try {
+        const {data} = await axios.get(process.env.REACT_APP_API_URL + 'participant/all'  , {
+            params: {
+                page : 1,
+                status : null,
+                limit : 10
+            }
+        });
+        setParticipants(data.participants);
+    } catch (error) {
+        console.log(error);
+    }
+  }
+  useEffect(() => {getParticipants()},[])
+
+  const handleAccept = (_id) => {
     setParticipants(participants.map(p => 
-      p.id === id ? { ...p, status: 'accepted' } : p
+      p._id === _id ? { ...p, status: 'accepted' } : p
     ));
   };
 
-  const handleReject = (id) => {
+  const handleReject = (_id) => {
     setParticipants(participants.map(p => 
-      p.id === id ? { ...p, status: 'rejected' } : p
+      p._id === _id ? { ...p, status: 'rejected' } : p
     ));
   };
 
@@ -37,10 +40,10 @@ const ParticipantsList = () => {
       <h1 className="text-2xl font-bold text-center mb-6">Participants List</h1>
       {participants.map((participant) => (
         <div 
-          key={participant.id} 
+          key={participant._id} 
           className="flex items-center justify-between bg-white shadow-md rounded-lg p-4 mb-4 border border-gray-200"
         >
-          <div className="flex-grow overflow-hidden">
+          <div className="flex-grow overflow-h_idden">
             <div className="flex items-center space-x-2">
               <span className="font-bold text-lg truncate">
                 {participant.firstName} {participant.lastName}
@@ -56,13 +59,13 @@ const ParticipantsList = () => {
           {participant.status === 'pending' && (
             <div className="flex space-x-2 ml-4">
               <button 
-                onClick={() => handleAccept(participant.id)}
+                onClick={() => handleAccept(participant._id)}
                 className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded transition duration-300 ease-in-out"
               >
                 Accept
               </button>
               <button 
-                onClick={() => handleReject(participant.id)}
+                onClick={() => handleReject(participant._id)}
                 className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded transition duration-300 ease-in-out"
               >
                 Reject

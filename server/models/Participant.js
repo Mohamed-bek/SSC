@@ -28,6 +28,11 @@ const participantSchema = new Schema(
     description: {
       type: String,
     },
+    status: {
+      type: String,
+      enum: ["pending", "accepted", "rejected"],
+      default: "pending",
+    },
   },
   {
     timestamps: true,

@@ -8,7 +8,7 @@ import { upload } from "../utilitis/multerConf.js";
 
 const ParticipantRouter = Router();
 
-ParticipantRouter.post("/", upload.single("file"), AddParticipant);
+ParticipantRouter.post("/new", upload.single("file"), AddParticipant);
 ParticipantRouter.get("/all", GetParticipants);
 ParticipantRouter.put("/:id", ParticipantStatus);
 

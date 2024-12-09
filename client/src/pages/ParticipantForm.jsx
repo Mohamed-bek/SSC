@@ -1,57 +1,3 @@
-
-
-// const ParticipantForm = () => {
-//   const [formData, setFormData] = useState({
-//     firstName: "",
-//     lastName: "",
-//     email: "",
-//     image: null,
-//     phoneNumber: "",
-//     description: "",
-//   });
-
-//   const [imagePreview, setImagePreview] = useState(null);
-
-//   const handleInputChange = (e) => {
-//     const { name, value } = e.target;
-//     setFormData((prev) => ({
-//       ...prev,
-//       [name]: value,
-//     }));
-//   };
-
-//   const handleImageChange = (e) => {
-//     const file = e.target.files[0];
-//     if (file) {
-//       setFormData((prev) => ({
-//         ...prev,
-//         image: file,
-//       }));
-
-//       const reader = new FileReader();
-//       reader.onloadend = () => {
-//         setImagePreview(reader.result);
-//       };
-//       reader.readAsDataURL(file);
-//     }
-//   };
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     console.log("Submitted Form Data:", formData);
-//   };
-
-//   return (
-//     <div className="w-full px-5 pt-[80px] min-h-dvh bg-gradient-to-b flex justify-center items-center from-black via-black/90 via-[70%] to-purple-900/40 to-[100%]">
-
-//     </div>
-//   );
-// };
-
-// export default ParticipantForm;
-
-
-
 import axios from "axios";
 import React, { useState } from "react";
 import Stars from "../components/Stars";
@@ -140,7 +86,6 @@ const ParticipantForm = () => {
 
     } catch (error) {
       console.log(error);
-      // Show error popup
       setSubmitStatus({
         show: true,
         success: false,

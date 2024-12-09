@@ -29,6 +29,7 @@ export const AddParticipant = async (req, res) => {
       description,
       image: secure_url,
     });
+
     await fs.promises.unlink(file.path);
     const template = fs.readFileSync(
       path.join(__dirname, "../mail/Congratulation.ejs"),

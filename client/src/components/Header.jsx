@@ -7,7 +7,7 @@ const Header = () => {
         <FaLessThan/> <span className="text-[5rem]">Start Coding Club</span> <HiMiniSlash/> <FaGreaterThan/>
       </h1> */}
 
-      <h2 className="txet-[2rem] md:text-[3.5rem] text-purple-200  mx-auto mb-5 font-bold">
+      <h2 className="text-[2rem] md:text-[3.5rem] text-purple-200  mx-auto mb-5 font-bold">
         <span className="text-primary"> SSC </span>  Where Innovation Meets Community
       </h2>
       <p className="text-[0.9rem] md:text-[1.2rem] leading-7 text-purple-200 max-w-3xl mx-auto capitalize">

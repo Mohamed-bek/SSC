@@ -9,7 +9,7 @@ import AddMember from "./pages/Admin/AddMember";
 
 function App() {
   return (
-    <div className="min-h-screen bg-black bg-gradient-to-b from-black via-black to-purple-900/10 relative overflow-hidden">
+    <div className="min-h-dvh bg-black bg-gradient-to-b from-black via-black to-purple-900/10 relative overflow-hidden">
       <HeaderHome />
       <Routes>
         <Route path="/" element={<Home />} />

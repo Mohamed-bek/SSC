@@ -96,7 +96,7 @@ const Members = () => {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-900 to-purple-900">
+      <div className="flex justify-center items-center min-h-dvh bg-gradient-to-br from-gray-900 to-purple-900">
         <div className="animate-pulse text-white text-2xl flex items-center">
           <FaUsers className="mr-4 h-12 w-12" />
           Loading Members...
@@ -106,7 +106,7 @@ const Members = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b relative from-black via-black/90 via-[70%] to-purple-900/40 to-[100%] py-12 px-4 sm:px-6 lg:px-8 ">
+    <div className="min-h-dvh bg-gradient-to-b relative from-black via-black/90 via-[70%] to-purple-900/40 to-[100%] py-12 px-4 sm:px-6 lg:px-8 ">
     <Stars/>
       <div className="max-w-7xl mx-auto">
         {/* Header */}

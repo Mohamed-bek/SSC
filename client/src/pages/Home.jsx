@@ -11,7 +11,7 @@ function Home() {
     <div className="w-full h-full">
       <div className="w-full h-dvh bg-gradient-to-b from-black via-black/90 via-[70%] to-purple-900/40 to-[100%]">
         <Stars />
-        <div className="relative z-10 min-h-screen flex items-center justify-center px-4 ">
+        <div className="relative z-10 min-h-dvh flex items-center justify-center px-4 ">
           <Header />
         </div>
       </div>

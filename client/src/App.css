@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-color: purple;
+}
+html {
+  background-color: black;
+}
+* {
+  /* App.css */
+  font-family: "Roboto", sans-serif;
+}
+.blurCss {
+  /* background: rgb(255, 255, 255); */
+  background: linear-gradient(
+    45deg,
+    rgb(248, 5, 192),
+    rgb(113, 3, 88),
+    rgb(74, 0, 74),
+    rgb(74, 0, 74),
+    rgb(113, 3, 88),
+    rgb(245, 8, 189)
+  );
+}
+.homeb {
+  backdrop-filter: blur(70px);
+  background-color: rgba(0, 0, 0, 0.207);
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-twinkle {
+  animation: twinkle linear infinite;
+}
+
+.link.active {
+  color: var(--primary-color);
+}

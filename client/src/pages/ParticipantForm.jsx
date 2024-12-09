@@ -182,7 +182,7 @@ const ParticipantForm = () => {
           <div>
           <div className="flex justify-center gap-2 items-start mb-5">
              {/* Image Upload */}
-          <div className="flex w-fit flex-col items-center">
+          <div className="flex w-[100px] md:w-1/2 flex-col items-center">
             <label htmlFor="image" className="cursor-pointer group">
               <div className="w-32 h-32 rounded-full border-4 border-dashed border-white/30 flex items-center justify-center group-hover:border-purple-500 transition-all">
                 {imagePreview ? (

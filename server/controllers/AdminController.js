@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import Admin from "../models/Admin.js";
 import { generateTokens } from "../utilitis/tokens.js";
 import cloudinary from "cloudinary";

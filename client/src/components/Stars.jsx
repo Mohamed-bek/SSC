@@ -1,6 +1,8 @@
 
+import React , {useEffect} from 'react'
 
 const Stars = () => {
+  useEffect(() => {},[])
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none">
       {[...Array(300)].map((_, i) => (

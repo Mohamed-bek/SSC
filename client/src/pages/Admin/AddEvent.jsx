@@ -151,6 +151,7 @@ const AddEvent = () => {
       await API.post(process.env.REACT_APP_API_URL + "event", formDataToSend);
       toast.success("Event created successfully!");
     } catch (error) {
+      console.log(error);
       const message = error?.response?.data?.error || "Event creation failed!";
       toast.error(message);
     } finally {

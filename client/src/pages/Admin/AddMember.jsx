@@ -97,6 +97,7 @@ const AddMember = () => {
       });
       setImagePreview(null);
     } catch (error) {
+      console.log(error);
       const message =
         error?.response?.data?.error || "Profile creation failed!";
       toast.error(message);

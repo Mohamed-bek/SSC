@@ -10,6 +10,10 @@ const memberSchema = new Schema(
       type: String,
       required: true,
     },
+    description: {
+      type: String,
+      required: true,
+    },
     email: {
       type: String,
       required: true,
@@ -25,12 +29,27 @@ const memberSchema = new Schema(
       default: null,
       sparse: true,
     },
-    description: {
-      type: String,
-    },
     department: {
       type: Schema.Types.ObjectId,
       ref: "Department",
+    },
+    media: {
+      linkedin: {
+        type: String,
+        default: null,
+      },
+      github: {
+        type: String,
+        default: null,
+      },
+      portfolio: {
+        type: String,
+        default: null,
+      },
+    },
+    work: {
+      type: String,
+      required: true,
     },
   },
   {

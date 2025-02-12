@@ -5,20 +5,14 @@ import {
   GetProjectById,
   GetProjects,
 } from "../controllers/ProjectController.js";
+import { authenticateToken } from "../middleware/Auth.js";
 import { upload } from "../utilitis/multerConf.js";
 
 const ProjectRouter = Router();
 
-ProjectRouter.post(
-  "/",
-  upload.fields([
-    { name: "thumbnail", maxCount: 1 },
-    { name: "video", maxCount: 1 },
-  ]),
-  AddProject
-);
+ProjectRouter.post("/", authenticateToken, upload.single("file"), AddProject);
 ProjectRouter.get("/", GetProjects);
 ProjectRouter.get("/:id", GetProjectById);
-ProjectRouter.delete("/:id", DeleteProject);
+ProjectRouter.delete("/:id", authenticateToken, DeleteProject);
 
 export default ProjectRouter;

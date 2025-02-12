@@ -5,13 +5,14 @@ import {
   DeleteMember,
   GetMembers,
 } from "../controllers/MemberController.js";
+import { authenticateToken } from "../middleware/Auth.js";
 import { upload } from "../utilitis/multerConf.js";
 
 const MemberRouter = Router();
 
-MemberRouter.post("/", upload.single("file"), AddMember);
-MemberRouter.delete("/", DeleteMember);
+MemberRouter.post("/", authenticateToken, upload.single("file"), AddMember);
+MemberRouter.delete("/", authenticateToken, DeleteMember);
 MemberRouter.get("/all", GetMembers);
-MemberRouter.put("/", UpdateMember);
+MemberRouter.put("/", authenticateToken, UpdateMember);
 
 export default MemberRouter;

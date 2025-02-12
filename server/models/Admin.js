@@ -31,8 +31,7 @@ const AdminSchema = new Schema(
         type: String,
       },
     },
-    resetToken: { type: String },
-    resetTokenExpiration: { type: Date },
+    refreshToken: { type: String, default: null },
   },
   {
     timestamps: true,

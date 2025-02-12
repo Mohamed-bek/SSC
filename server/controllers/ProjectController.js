@@ -4,41 +4,36 @@ import fs from "fs";
 
 export const AddProject = async (req, res) => {
   try {
-    const { name, description, link, owner } = req.body;
-    if (!name || !description || !link || !owner)
+    const { title, description, link, members, techs } = req.body;
+    if (!title || !description || !link)
       return res.status(404).json({ error: "Some Data are Missing" });
+    if (members.length === 0)
+      return res
+        .status(404)
+        .json({ error: "The Project Has A Least One Member" });
 
-    const videoFile = req.files.video[0] || null;
-    const thumbnailFile = req.files.thumbnail[0] || null;
-
-    if (!videoFile)
-      return res.status(404).json({ error: "Video File Not Found" });
-    if (!thumbnailFile)
-      return res.status(404).json({ error: "Thumbnail File Not Found" });
-
-    const thumbnail = await cloudinary.v2.uploader.upload(thumbnailFile.path, {
-      folder: "ProjectThumbnails",
-    });
-    const video = await cloudinary.v2.uploader.upload(videoFile.path, {
-      folder: "ProjectVideos",
-      resource_type: "video",
+    const file = req.file;
+    if (!file)
+      return res.status(404).json({ error: "The Member Should Have an Image" });
+    const image = await cloudinary.v2.uploader.upload(file.path, {
+      folder: "projects",
     });
 
-    await fs.promises.unlink(videoFile.path);
-    await fs.promises.unlink(thumbnailFile.path);
-
+    await fs.promises.unlink(file.path);
+    const membersId = JSON.parse(members);
+    const techsValues = JSON.parse(techs);
     const project = await Project.create({
-      name,
+      title,
       description,
       link,
-      owner,
-      thumbnail,
-      video,
+      members: membersId,
+      image,
+      techs: techsValues,
     });
 
     res.status(200).json({ project });
   } catch (error) {
-    console.error("Error in AddProject:", error); // Log the error message
+    console.error("Error in AddProject:", error);
     res.status(500).json({ error: error.message });
   }
 };
@@ -68,7 +63,8 @@ export const GetProjects = async (req, res) => {
 
     const projects = await Project.find(filter)
       .skip(limit * (page - 1))
-      .limit(limit);
+      .limit(limit)
+      .populate("members", "firstName lastName image");
 
     res.status(200).json({ projects });
   } catch (error) {
@@ -79,7 +75,10 @@ export const GetProjects = async (req, res) => {
 export const GetProjectById = async (req, res) => {
   try {
     const { id } = req.params;
-    const project = await Project.findById(id);
+    const project = await Project.findById(id).populate(
+      "members",
+      "firstName lastName image"
+    );
     if (!project) return res.status(404).json({ error: "Project not found" });
     res.status(200).json({ project });
   } catch (error) {

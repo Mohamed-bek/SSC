@@ -1,16 +1,27 @@
 import { Router } from "express";
 import {
   AddDepartment,
-  AddMembers,
   ChangeLeaderAndCoLeader,
+  GetDepartements,
   RemoveMember,
-} from "../controllers/DepartmentController";
+} from "../controllers/DepartmentController.js";
+import { authenticateToken } from "../middleware/Auth.js";
+import { upload } from "../utilitis/multerConf.js";
 
 const DepartmentRouter = Router();
 
-DepartmentRouter.post("/", AddDepartment);
-DepartmentRouter.put("/leaders/:id", ChangeLeaderAndCoLeader);
-DepartmentRouter.patch("/members/:id", AddMembers);
-DepartmentRouter.patch("/member/:id", RemoveMember);
+DepartmentRouter.post(
+  "/",
+  authenticateToken,
+  upload.single("file"),
+  AddDepartment
+);
+DepartmentRouter.get("/", GetDepartements);
+DepartmentRouter.put(
+  "/leaders/:id",
+  authenticateToken,
+  ChangeLeaderAndCoLeader
+);
+DepartmentRouter.patch("/member/:id", authenticateToken, RemoveMember);
 
 export default DepartmentRouter;

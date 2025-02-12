@@ -23,12 +23,13 @@ const departmentSchema = new Schema(
     leader: {
       type: Schema.Types.ObjectId,
       ref: "Member",
+      required: true,
     },
     co_leader: {
       type: Schema.Types.ObjectId,
       ref: "Member",
     },
-    members: [{ type: Schema.Types.ObjectId, ref: "Member" }],
+    responsibilities: [String],
   },
   { timestamps: true }
 );

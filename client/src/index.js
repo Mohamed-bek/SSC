@@ -4,10 +4,13 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router } from "react-router-dom";
+import VisitorTracker from "./hooks/useVisitorTracking";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Router>
-    <App />
+    <VisitorTracker>
+      <App />
+    </VisitorTracker>
   </Router>
 );
 

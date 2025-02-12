@@ -8,6 +8,9 @@ import MemberRouter from "./routes/MemberRouter.js";
 import AdminRouter from "./routes/AdminRouter.js";
 import ProjectRouter from "./routes/ProjectRouter.js";
 import ParticipantRouter from "./routes/ParticipantRouter.js";
+import EventRouter from "./routes/EventRouter.js";
+import VisitorRouter from "./routes/VisitorRouter.js";
+import DepartmentRouter from "./routes/DepartmentRouter.js";
 
 dotenv.config();
 
@@ -21,7 +24,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "*",
+    origin: "http://localhost:3000",
     credentials: true,
   })
 );
@@ -32,6 +35,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/member", MemberRouter);
 app.use("/project", ProjectRouter);
 app.use("/participant", ParticipantRouter);
+app.use("/event", EventRouter);
+app.use("/visitor", VisitorRouter);
+app.use("/department", DepartmentRouter);
 app.use(AdminRouter);
 
 const MONGO_URL = process.env.MONGO_URL;

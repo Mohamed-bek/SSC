@@ -9,7 +9,18 @@ const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 export const AddMember = async (req, res) => {
   try {
-    const { firstName, lastName, email, phoneNumber, description } = req.body;
+    const {
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      description,
+      linkedinUrl,
+      portfolioUrl,
+      githubUrl,
+      work,
+      department,
+    } = req.body;
     const file = req.file;
     if (!file)
       return res.status(404).json({ error: "The Member Should Have an Image" });
@@ -20,7 +31,6 @@ export const AddMember = async (req, res) => {
       return res
         .status(404)
         .json({ error: "Fail To Upload Image To Cloudinary" });
-
     const member = await Member.create({
       firstName,
       lastName,
@@ -28,6 +38,13 @@ export const AddMember = async (req, res) => {
       phoneNumber,
       description,
       image: secure_url,
+      work,
+      media: {
+        linkedin: linkedinUrl,
+        github: githubUrl,
+        portfolio: portfolioUrl,
+      },
+      department,
     });
     await fs.promises.unlink(file.path);
     const template = fs.readFileSync(
@@ -45,6 +62,7 @@ export const AddMember = async (req, res) => {
       subject: `Congratulations! You Become a Member of Start Coding Club`,
       html,
     });
+
     res.status(200).json({ message: "Success!", member });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -53,26 +71,37 @@ export const AddMember = async (req, res) => {
 
 export const GetMembers = async (req, res) => {
   try {
-    const { firstName, lastName, limit = 12, page = 1 } = req.query;
+    const { firstName, lastName, department, limit = 10, page = 1 } = req.query;
     let filter = {};
-
-    // Apply filtering if firstName or lastName are provided
-    if (firstName) {
-      filter.firstName = { $regex: firstName, $options: "i" }; // Case-insensitive search
+    if (department) {
+      filter.department = department;
     }
+    if (firstName) {
+      filter.$or = [
+        { firstName: { $regex: firstName, $options: "i" } },
+        { lastName: { $regex: firstName, $options: "i" } },
+      ];
+    }
+
     if (lastName) {
-      filter.lastName = { $regex: lastName, $options: "i" }; // Case-insensitive search
+      filter.$or = [
+        { firstName: { $regex: lastName, $options: "i" } },
+        { lastName: { $regex: lastName, $options: "i" } },
+      ];
     }
 
     const members = await Member.find(filter)
-      .skip(limit * (page - 1)) // Pagination
-      .limit(limit) // Limit per page
+      .skip(limit * (page - 1))
+      .limit(limit)
       .populate({
         path: "department",
         select: "name",
       });
+    const NbOfMembers = await Member.countDocuments(filter);
 
-    res.status(200).json({ message: "Success!", members });
+    res
+      .status(200)
+      .json({ members, NbOfPages: Math.ceil(NbOfMembers / limit) });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

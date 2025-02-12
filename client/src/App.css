@@ -3,17 +3,44 @@
 @tailwind utilities;
 
 :root {
-  --primary-color: #de2dff;
+  --primary-color: #6a09c9;
+  /* --primary-color: #6a09c9; */
+  --primaryTransparent-color: #6909c939;
+  /* --secondary-color: #dfc0ff; */
+  --secondary-color: white;
+  --therd-color: #1d1d1f;
+  --grayColor-color: #eee;
+  /* --therd-color: #22152bc7; */
 }
 html {
-  background-color: black;
+  background-color: var(--therd-color);
 }
+
+@font-face {
+  font-family: "Luckiest Guy";
+  src: url("./fonts/Luckiest_Guy/LuckiestGuy-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("./fonts//Inter//Inter-VariableFont_opsz\,wght.ttf")
+    format("truetype");
+}
+
 * {
-  /* App.css */
-  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
+body {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: var(--secondary-color);
+}
+
 .blurCss {
-  /* background: rgb(255, 255, 255); */
   background: linear-gradient(
     45deg,
     rgb(248, 5, 192),
@@ -45,4 +72,270 @@ html {
 
 .link.active {
   color: var(--primary-color);
+}
+
+.BackPurple {
+  background: linear-gradient(
+    to bottom,
+    black,
+    rgba(0, 0, 0, 0.9) 40%,
+    rgb(75, 10, 195) 100%
+  );
+  background-size: 100% 200%;
+  animation: upDown 2s linear infinite alternate;
+}
+
+@keyframes upDown {
+  0% {
+    background-position: 0% 5%;
+  }
+  100% {
+    background-position: 0% 20%;
+  }
+}
+
+.CircleEffect {
+  position: relative;
+}
+.CircleEffect::after {
+  content: "";
+  position: absolute;
+  background-color: var(--primary-color);
+  width: 14px;
+  height: 12px;
+  border-radius: 100%;
+  top: -1000px;
+  left: 50%;
+  transform: translate(-50%, 10%);
+  animation: BounceInDown 2s linear 1.2s forwards;
+}
+
+@keyframes BounceInDown {
+  0% {
+    top: -1000px;
+  }
+  30% {
+    top: 5px;
+  }
+  40% {
+    top: -10px;
+  }
+  50% {
+    top: 0px;
+    left: 50%;
+  }
+  70% {
+    top: 0px;
+    left: 310px;
+  }
+  75% {
+    top: 30px;
+    left: 330px;
+  }
+  99% {
+    top: 600px;
+    left: 340px;
+    display: block;
+  }
+  100% {
+    top: 600px;
+    left: 340px;
+    display: none;
+  }
+}
+
+.HeaderAnimation {
+  animation: letterBouncIn 0.3s linear forwards;
+}
+
+@keyframes letterBouncIn {
+  0% {
+    opacity: 0;
+    transform: translateY(100px);
+    display: block;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+    display: block;
+  }
+}
+
+.Header {
+  animation: rotateRight 1s linear 1.95s backwards;
+  /* font-family: "Luckiest Guy"; */
+}
+
+@keyframes rotateRight {
+  0%,
+  100% {
+    rotate: 0deg;
+  }
+  50% {
+    rotate: 2deg;
+  }
+}
+
+.cont {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.meteor {
+  position: absolute;
+  width: 300px;
+  height: 1px;
+  transform: rotate(-45deg);
+  background-image: linear-gradient(to right, #fff, rgba(255, 255, 255, 0));
+  animation: meteor linear infinite;
+}
+.meteor:before {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-top: -5px;
+  background: rgba(255, 255, 255, 0.762);
+  box-shadow: 0 0 15px 3px #fff;
+}
+@keyframes meteor {
+  0% {
+    opacity: 1;
+    margin-top: -300px;
+    margin-right: -300px;
+  }
+  12% {
+    opacity: 0;
+  }
+  15% {
+    margin-top: 300px;
+    margin-left: -600px;
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.MainHeaderAnimation {
+  animation: BounceDown 0.4s ease-in-out 0.4s forwards;
+}
+@keyframes BounceDown {
+  0% {
+    transform: translateY(-100%);
+  }
+  80% {
+    transform: translateY(10px);
+  }
+  90% {
+    transform: translateY(-8px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.SayHi:hover .icon {
+  animation: Chacker 0.7s ease-in-out 0.2s infinite forwards;
+}
+@keyframes Chacker {
+  0%,
+  40%,
+  80% {
+    transform: rotate(8deg);
+  }
+  20%,
+  60%,
+  100% {
+    transform: rotate(-8deg);
+  }
+}
+
+.PageHeader {
+  font-size: 4.5rem;
+  line-height: 4rem;
+  text-align: center;
+  /* color: var(--secondary-color); */
+  font-family: "Luckiest Guy", sans-serif;
+  letter-spacing: 0.025em;
+  scale: 1 1.5;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-down {
+  animation: fadeInDown 0.2s ease-out forwards;
+}
+
+.textTran {
+  -webkit-text-stroke: 0.8px var(--secondary-color);
+  color: transparent;
+}
+
+@keyframes fadeInLR {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-LR > .imageCont {
+  animation: fadeInLR 0.3s ease-out 0.2s forwards;
+}
+.fade-in-LR h3 > span {
+  animation: fadeInUp 0.1s ease-out forwards;
+}
+.fade-in-LR li,
+.fade-in-LR h4,
+.fade-in-LR p {
+  animation: fadeInUp 0.3s ease-out forwards;
+}
+
+.dashLink.active {
+  /* background-color: #00888f; */
+  position: relative;
+  color: var(--therd-color);
+}
+.dashLink.active::after {
+  content: "";
+  position: absolute;
+  width: 92px;
+  height: 100%;
+  background-color: var(--secondary-color);
+  z-index: -1;
+  border-radius: 30px;
+  top: 0;
+  left: 0;
+  transform: translateX(-20px);
+  transition: 0.3s;
+}
+.linksContainer:hover .dashLink.active::after {
+  width: calc(100% + 20px);
 }

@@ -5,17 +5,18 @@ module.exports = {
   theme: {
     extend: {
       writingMode: {
-        vertical: "vertical-rl", // This makes text vertical
+        vertical: "vertical-rl",
       },
       fontFamily: {
-        roboto: ["Roboto", "sans-serif"],
-        bebas: ["Bebas Neue", "sans-serif"],
+        inter: ["Inter", "sans-serif"],
+        luckiest: ["Luckiest Guy", "sans-serif"],
       },
       colors: {
         primary: "var(--primary-color)",
+        primaryTransparent: "var(--primaryTransparent-color)",
         secondary: "var(--secondary-color)",
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        therd: "var(--therd-color)",
+        grayColor: "var(--grayColor-color)",
       },
       screens: {
         xs: "475px",

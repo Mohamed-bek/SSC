@@ -2,26 +2,23 @@ import { Schema, model } from "mongoose";
 
 const projectSchema = new Schema(
   {
-    name: {
+    title: {
       type: String,
       required: true,
     },
     description: { type: String, required: true },
-    owner: {
-      type: Schema.Types.ObjectId,
-      ref: "Member",
-      required: true,
-    },
-    thumbnail: {
+    members: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Member",
+      },
+    ],
+    image: {
       public_id: { type: String, required: true },
       secure_url: { type: String, required: true },
     },
-    video: {
-      public_id: { type: String, required: true },
-      secure_url: { type: String, required: true },
-    },
-    tags: [String],
     link: { type: String, required: true },
+    techs: [{ type: String }],
   },
   { timestamps: true }
 );

@@ -27,6 +27,7 @@ function Projects() {
       console.log(data);
       setProjects(data.projects || []);
     } catch (error) {
+      console.log(error);
     } finally {
       setIsLoading(false);
     }

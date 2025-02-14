@@ -15,28 +15,6 @@ import RegistrationRouter from "./routes/RegistrationRouter.js";
 
 dotenv.config();
 
-// Initialize MongoDB connection
-let cachedDb = null;
-
-async function connectToDatabase() {
-  if (cachedDb) {
-    return cachedDb;
-  }
-
-  try {
-    const db = await mongoose.connect(process.env.MONGO_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    cachedDb = db;
-    return db;
-  } catch (error) {
-    console.error("MongoDB connection error:", error);
-    throw error;
-  }
-}
-
-// Configure cloudinary
 cloudinary.config({
   cloud_name: process.env.CLOUDE_NAME,
   api_key: process.env.CLOUD_API_NAME,
@@ -55,16 +33,6 @@ app.use(express.json({ limit: "50mb" }));
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
-// Connect to MongoDB before handling routes
-app.use(async (req, res, next) => {
-  try {
-    await connectToDatabase();
-    next();
-  } catch (error) {
-    next(error);
-  }
-});
-
 app.use("/member", MemberRouter);
 app.use("/project", ProjectRouter);
 app.use("/participant", ParticipantRouter);
@@ -74,10 +42,15 @@ app.use("/department", DepartmentRouter);
 app.use("/registration", RegistrationRouter);
 app.use(AdminRouter);
 
-// Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ error: "Something broke!" });
-});
+const MONGO_URL = process.env.MONGO_URL;
+
+mongoose
+  .connect(MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((err) => console.error("MongoDB connection error:", err));
+const PORT = process.env.PORT;
+// app.listen(PORT, () => {
+//   console.log(`Server running on http://localhost:${PORT}`);
+// });
 
 export default app;

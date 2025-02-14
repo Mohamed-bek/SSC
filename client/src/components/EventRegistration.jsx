@@ -3,9 +3,10 @@ import { useRef } from "react";
 import { FaXmark } from "react-icons/fa6";
 import InputFieldCustom from "./InputFieldCustom";
 import { ToastContainer, toast } from "react-toastify";
-import axios from "axios";
+import useAxios from "../hooks/useAxios";
 
 function EventRegistration({ event, setVisible, setLoading }) {
+  const API = useAxios();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -18,7 +19,7 @@ function EventRegistration({ event, setVisible, setLoading }) {
     try {
       setLoading(true);
 
-      await axios.post(`${process.env.REACT_APP_API_URL}registration`, {
+      await API.post(`${process.env.REACT_APP_API_URL}registration`, {
         email,
         firstName,
         lastName,

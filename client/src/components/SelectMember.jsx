@@ -1,8 +1,9 @@
-import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 import InputFieldCustom from "./InputFieldCustom";
+import useAxios from "../hooks/useAxios";
 
 function SelectMember({ selectedMember, setSelectedMember }) {
+  const API = useAxios();
   const [members, setMembers] = useState([]);
   const [search, setSearch] = useState("");
   const [filteredMembers, setFilteredMembers] = useState([]);
@@ -12,7 +13,7 @@ function SelectMember({ selectedMember, setSelectedMember }) {
   useEffect(() => {
     const GetMembers = async () => {
       try {
-        const { data } = await axios.get(
+        const { data } = await API.get(
           `${process.env.REACT_APP_API_URL}member/all`
         );
         setMembers(data.members);

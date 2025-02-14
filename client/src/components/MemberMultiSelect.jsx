@@ -1,19 +1,19 @@
-import axios from "axios";
 import React, { useRef, useState } from "react";
 import { useEffect } from "react";
 import { FaCheck, FaPlus, FaTimes } from "react-icons/fa";
-
+import useAxios from "../hooks/useAxios";
 const MemberMultiSelect = ({
   selectedMembers = [],
   setSelectedMembers,
   maxSelection = Infinity,
 }) => {
+  const API = useAxios();
   const AllMemberRef = useRef();
   const [members, setMembers] = useState([]);
 
   const GetMembers = async () => {
     try {
-      const { data } = await axios.get(
+      const { data } = await API.get(
         `${process.env.REACT_APP_API_URL}member/all`
       );
       setMembers(data.members);

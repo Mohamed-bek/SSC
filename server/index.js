@@ -24,6 +24,8 @@ cloudinary.config({
 const app = express();
 
 const allowedOrigins = ["https://ssc-5w8t.vercel.app", "http://localhost:3000"];
+console.log("Mongo URL:", process.env.MONGO_URL);
+console.log("Port:", process.env.PORT);
 
 app.use(
   cors({
@@ -63,7 +65,9 @@ mongoose
   .connect(MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("MongoDB connection error:", err));
-const PORT = process.env.PORT;
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+const PORT = process.env.PORT || 8000;
+// app.listen(PORT, () => {
+//   console.log(`Server running on http://localhost:${PORT}`);
+// });
+
+export default app;

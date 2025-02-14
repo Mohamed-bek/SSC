@@ -113,7 +113,7 @@ const MemberMultiSelect = ({
           <h3 className="text-center text-xl font-semibold mb-2">
             Select {maxSelection === 1 ? "Member" : "Members"}
           </h3>
-          <p className="text-sm font-light mb-2 text-center mb-5">
+          <p className="text-sm font-light text-center mb-5">
             {maxSelection === 1
               ? "Click on a member to select them"
               : "Click on members to select or unselect"}

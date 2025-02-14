@@ -1,25 +1,28 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { FaPlus, FaTrash } from "react-icons/fa";
+import { FaPen, FaPlus, FaTrash } from "react-icons/fa";
 import MemberCard from "../../components/MemberCard";
 import InputFieldCustom from "../../components/InputFieldCustom";
 import { Link } from "react-router-dom";
 import useAxios from "../../hooks/useAxios";
+import { toast, ToastContainer } from "react-toastify";
+import DeletePopup from "../../components/DeletePopup";
+import Loader from "../../components/Loader";
 
 const ClubMembers = () => {
   const API = useAxios();
+  const [loading, setLoading] = useState(true);
   const [members, setMembers] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [department, setDepartment] = useState("");
   const [NbOfPages, setNbOfPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const [password, setPassword] = useState("");
-  const deleteRef = useRef(null);
-  const [id, setId] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [popup, setPopup] = useState(false);
+  const [memberToDelete, setMemberToDelete] = useState(null);
 
-  const getDepartements = async (req, res) => {
+  const getDepartements = async () => {
     try {
       const { data } = await axios.get(
         `${process.env?.REACT_APP_API_URL}department`
@@ -32,9 +35,11 @@ const ClubMembers = () => {
   useEffect(() => {
     getDepartements();
   }, []);
+
   useEffect(() => {
     const getMembers = async () => {
       try {
+        setLoading(true);
         const { data } = await axios.get(
           process.env.REACT_APP_API_URL + "member/all",
           {
@@ -52,6 +57,8 @@ const ClubMembers = () => {
         setNbOfPages(data.NbOfPages);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -74,32 +81,34 @@ const ClubMembers = () => {
     setCurrentPage(1);
   };
 
+  const cancelDelete = () => {
+    setMemberToDelete(null);
+    setPopup(false);
+  };
+
   const deleteUser = async (e) => {
     e.preventDefault();
     try {
-      await API.delete(process.env.REACT_APP_API_URL + `admin/user/${id}`, {
-        data: { password },
-        withCredentials: true,
-      });
-      deleteRef.current.classList.add("scale-0");
-      const NewUsers = members.filter((c) => c._id !== id);
-      setMembers(NewUsers);
-      setSelectedUser(null);
-      setId(null);
+      setLoading(true);
+      await API.delete(
+        process.env.REACT_APP_API_URL + `member/${memberToDelete._id}`
+      );
+      setMembers((prev) =>
+        prev.filter((member) => member._id !== memberToDelete._id)
+      );
+      toast.success("Member Deleted Successfully");
+      cancelDelete();
     } catch (error) {
-      console.log(error);
+      toast.error(error?.response?.data?.error || "Failed To Delete Member");
+    } finally {
+      setLoading(false);
     }
   };
 
-  const deleteB = (id) => {
-    setId(id);
-    deleteRef.current.classList.remove("scale-0");
-  };
-
-  const cancelDelete = (e) => {
-    e.preventDefault();
-    setId(null);
-    deleteRef.current.classList.add("scale-0");
+  const selectUserToDelete = (member) => {
+    setMemberToDelete(member);
+    console.log("member : ", member);
+    setPopup(true);
   };
 
   return (
@@ -111,38 +120,16 @@ const ClubMembers = () => {
           </div>
         </div>
       )}
-
-      <div
-        ref={deleteRef}
-        className="absolute user-card-overlay duration-300 top-0 left-0 w-full h-full flex items-center justify-center bg-black/40 z-[999] scale-0"
-      >
-        <form className="p-8 bg-therd rounded-lg">
-          <InputFieldCustom
-            value={password}
-            setValue={(e) => setPassword(e.target.value)}
-            type="password"
-            placeholder="Enter your password"
-            styles="!w-[220px]"
-            required
-          />
-          <div className="flex justify-center gap-2 items-center w-[220px] mt-5">
-            <button
-              onClick={deleteUser}
-              className="bg-red-500 text-whiteColor flex-1 py-2 cursor-pointer font-semibold block rounded-md"
-            >
-              Delete
-            </button>
-            <button
-              onClick={(e) => cancelDelete(e)}
-              className="bg-blue-500 text-whiteColor flex-1 py-2 cursor-pointer font-semibold block rounded-md"
-            >
-              Cancel
-            </button>
-          </div>
-        </form>
-      </div>
-
-      {/* {Start Frommm Here } */}
+      {loading && <Loader />}
+      <ToastContainer theme="dark" />
+      {popup && (
+        <DeletePopup
+          cancel={cancelDelete}
+          deleteFunc={deleteUser}
+          text="Delete Member"
+          subText={`Are you sure you want to delete ${memberToDelete.firstName}`}
+        />
+      )}
 
       <div className="w-full bg-therd rounded-lg flex items-center justify-between px-5 py-2">
         <div className="flex items-center gap-2">
@@ -216,9 +203,16 @@ const ClubMembers = () => {
                 {new Date(member?.createdAt).toLocaleDateString()}
               </div>
               <div className="w-[60px] text-center flex items-center justify-center gap-2">
+                <Link
+                  title="update"
+                  to={`update-member/${member._id}`}
+                  className="text-blue-500 ml-2"
+                >
+                  <FaPen />
+                </Link>
                 <button
                   title="delete"
-                  onClick={() => deleteB(member?._id)}
+                  onClick={() => selectUserToDelete(member)}
                   className="text-red-500 ml-2"
                 >
                   <FaTrash />

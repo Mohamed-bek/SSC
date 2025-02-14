@@ -1,15 +1,17 @@
 import { useEffect } from "react";
 import axios from "axios";
 import { useAdminContext } from "../context/Admin";
+import useAxios from "./useAxios";
 
 const useAuth = () => {
+  const API = useAxios();
   const { accessToken, setAccessToken, logout, admin, login } =
     useAdminContext();
 
   useEffect(() => {
     const refreshAccessToken = async () => {
       try {
-        const { data } = await axios.get(
+        const { data } = await API.get(
           process.env.REACT_APP_API_URL + "refresh",
           { withCredentials: true }
         );

@@ -38,6 +38,7 @@ body {
   font-weight: 400;
   font-style: normal;
   color: var(--secondary-color);
+  background-color: var(--therd-color);
 }
 
 .blurCss {
@@ -180,6 +181,12 @@ body {
   width: 80%;
   margin: 0 auto;
 }
+@media (max-width: 867px) {
+  .cont {
+    width: 100%;
+    padding: 0 15px;
+  }
+}
 
 .meteor {
   position: absolute;
@@ -263,6 +270,16 @@ body {
   padding-top: 20px;
   padding-bottom: 20px;
 }
+@media (max-width: 640px) {
+  .PageHeader {
+    font-size: 2rem;
+    line-height: 2rem;
+    letter-spacing: 0.02em;
+    scale: 1 1.5;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+}
 
 @keyframes fadeInUp {
   from {
@@ -338,4 +355,8 @@ body {
 }
 .linksContainer:hover .dashLink.active::after {
   width: calc(100% + 20px);
+}
+
+.slideIn {
+  transform: translateX(0) !important;
 }

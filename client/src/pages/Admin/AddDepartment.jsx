@@ -82,8 +82,7 @@ function AddDepartment() {
       toast.error("Please select a department leader");
       return;
     }
-    console.log(selectedLeader);
-    console.log(selectedCoLeader);
+
     setLoading(true);
     const formDataToSend = new FormData();
     formDataToSend.append("name", formData.name);

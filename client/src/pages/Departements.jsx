@@ -99,17 +99,19 @@ function Departements() {
     },
   ];
   return (
-    <div className="w-full min-h-[calc(100dvh-82px)] bg-therd pt-10">
+    <div className="w-full min-dvh bg-therd pt-3 md:pt-10">
       <h2 className="PageHeader text-secondary py-2"> Our Departements </h2>
-      <div className="px-10 mx-auto text-secondary pt-10">
+      <div className="px-4 md:px-10 mx-auto text-secondary pb-10 ">
         {departements.map((departement, i) => (
           <div
             ref={(el) => (departementsRef.current[i] = el)}
-            className={`flex justify-center items-center gap-10 w-full pb-20`}
+            className={`flex justify-center items-center flex-col md:flex-row gap-5 md:gap-10 w-full flex-wrap mt-10`}
             key={i}
             dir={i % 2 === 0 ? "ltr" : "rtl"}
           >
-            <div className={`w-[600px] opacity-0 translate-y-20 imageCont`}>
+            <div
+              className={`w-full md:min-w-[600px]  lg:w-[650px] opacity-0 translate-y-20 imageCont`}
+            >
               <img
                 alt={departement?.title}
                 src={departement?.image}
@@ -117,7 +119,7 @@ function Departements() {
               />
             </div>
             <div dir="ltr" className="flex-1 text-left pt-3 max-w-3xl">
-              <h3 className="text-5xl scale-y-125 tracking-wide font-luckiest textTran mb-3 flex">
+              <h3 className="text-[1.6rem] md:text-5xl scale-y-125 tracking-wide text-wrap font-luckiest textTran mb-3 flex">
                 {departement.title.split("").map((e, i) => (
                   <span
                     style={{ animationDelay: `${i * 50}ms` }}
@@ -131,7 +133,7 @@ function Departements() {
                 style={{
                   animationDelay: `${departement.title.length * 50 + 50}ms`,
                 }}
-                className="text-xl pb-3 font-normal opacity-0 translate-y-10 block "
+                className="text-base md:text-xl pb-3 font-normal opacity-0 translate-y-10 block "
               >
                 {departement.description}
               </p>
@@ -139,7 +141,7 @@ function Departements() {
                 style={{
                   animationDelay: `${departement.title.length * 50 + 200}ms`,
                 }}
-                className="text-2xl pb-1 capitalize font-medium opacity-0 translate-y-10"
+                className="text-lg md:text-2xl pb-1 capitalize font-medium opacity-0 translate-y-10"
               >
                 🚀 responsibilities :{" "}
               </h4>
@@ -151,7 +153,7 @@ function Departements() {
                         i * 150 + (departement.title.length * 50 + 500)
                       }ms`,
                     }}
-                    className="text-[1.1rem] mb-[2px] font-normal opacity-0 translate-y-10"
+                    className="text-sm mb-2 md:text-[1.1rem] font-normal opacity-0 translate-y-10"
                   >
                     ✅ {res}
                   </li>

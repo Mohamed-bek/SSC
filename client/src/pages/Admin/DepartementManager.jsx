@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { FaPlus, FaTrash } from "react-icons/fa";
+import { FaPen, FaPlus, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import DeletePopup from "../../components/DeletePopup";
 import useAxios from "../../hooks/useAxios";
+import { toast, ToastContainer } from "react-toastify";
+import Loader from "../../components/Loader";
 
 function DepartementManager() {
   const API = useAxios();
   const [departements, setDepartements] = useState([]);
-  const getDepartements = async (req, res) => {
+  const [loading, setLoading] = useState(true);
+  const [popup, setPopup] = useState(false);
+  const [departmentToDelete, setDepartmentToDelete] = useState(null);
+  const getDepartements = async () => {
     try {
       const { data } = await API.get(
         `${process.env?.REACT_APP_API_URL}department`
@@ -15,13 +21,43 @@ function DepartementManager() {
       setDepartements(data.departments);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const cancelDelete = () => {
+    setPopup(false);
+    setDepartmentToDelete(null);
+  };
+
+  const deleteDepartment = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      await API.delete(
+        `${process.env?.REACT_APP_API_URL}department/${departmentToDelete._id}`
+      );
+      setDepartements((prev) =>
+        prev.filter((departement) => departement._id !== departmentToDelete._id)
+      );
+      toast.success(
+        `${departmentToDelete.name} Department  deleted successfully`
+      );
+      cancelDelete();
+    } catch (error) {
+      toast.error(`Failed To Delete ${departmentToDelete.name} Department`);
+    } finally {
+      setLoading(false);
     }
   };
   useEffect(() => {
     getDepartements();
   }, []);
   return (
-    <div className="w-full h-full rounded-lg flex flex-col gap-3">
+    <div className="w-full h-full rounded-lg flex flex-col gap-3 relative">
+      {loading && <Loader />}
+      <ToastContainer theme="dark" />
       <div className="flex justify-between items-center px-4 py-3 rounded-lg  bg-therd">
         <h1 className="text-2xl text-secondary font-medium"> Departements </h1>
         <Link
@@ -32,6 +68,14 @@ function DepartementManager() {
           <FaPlus /> <span>Add Departement </span>
         </Link>
       </div>
+      {popup && (
+        <DeletePopup
+          deleteFunc={deleteDepartment}
+          cancel={() => cancelDelete()}
+          text="Delete Department"
+          subText={`Are You Sure You want to Delete this Department`}
+        />
+      )}
       <div className="flex-1 bg-therd rounded-lg overflow-hidden">
         <header className="flex items-center text-secondary justify-between p-4 bg-therd border-b border-grayColor">
           <div className="flex-1 min-w-[300px]">Name</div>
@@ -76,9 +120,19 @@ function DepartementManager() {
               </div>
               <div className="w-[180px] text-center">{departement.members}</div>
               <div className="w-[120px] text-center flex items-center justify-center gap-2">
+                <Link
+                  to={`update-department/${departement._id}`}
+                  title="update"
+                  className="text-blue-600 ml-2"
+                >
+                  <FaPen />
+                </Link>
                 <button
                   title="delete"
-                  // onClick={() => deleteB(departement?._id)}
+                  onClick={() => {
+                    setDepartmentToDelete(departement);
+                    setPopup(true);
+                  }}
                   className="text-red-500 ml-2"
                 >
                   <FaTrash />

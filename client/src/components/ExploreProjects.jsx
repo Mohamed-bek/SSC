@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import CustomButton from "./CustomButton";
 
 function ExploreProjects() {
@@ -15,19 +16,17 @@ function ExploreProjects() {
             if (ProjectImagesRef.current[0])
               ProjectImagesRef.current[0].classList.add(
                 "-rotate-[10deg]",
+                "-translate-x-[53%]",
                 "scale-[1.15]"
               );
             if (ProjectImagesRef.current[1])
               ProjectImagesRef.current[1].classList.add(
                 "scale-110",
-                "-translate-x-[calc(50%-25px)]",
-                "-rotate-[7deg]"
+                "-translate-x-[42%]",
+                "-rotate-[8deg]"
               );
             if (ProjectImagesRef.current[2])
-              ProjectImagesRef.current[2].classList.add(
-                "-rotate-[5deg]",
-                "-translate-x-[calc(50%-60px)]"
-              );
+              ProjectImagesRef.current[2].classList.add("-rotate-[5deg]");
           }
         });
       },
@@ -48,38 +47,38 @@ function ExploreProjects() {
   return (
     <div
       ref={ExploreProjectsRef}
-      className="w-full h-dvh justify-center items-center flex bg-therd"
+      className="w-full min-h-dvh justify-center md:items-center flex bg-therd pb-20"
     >
-      <div className="cont flex justify-center items-center flex-wrap gap-20">
+      <div className="cont flex justify-center items-start md:items-center flex-wrap gap-20">
         <div
           style={{ animationDuration: "0.5s", animationDelay: "0s" }}
           ref={ImagesContainerRef}
-          className="min-w-[350px] opacity-0 duration-500 md:min-w-[420px] relative"
+          className="min-w-[200px] opacity-0 duration-500 md:min-w-[420px] relative"
         >
           <img
             ref={(e) => (ProjectImagesRef.current[0] = e)}
-            className="w-[350px]  absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[1] duration-500 origin-bottom-left delay-500"
+            className="w-[350px]  absolute top-1/2 left-1/2 -translate-x-[calc(50%-40px)] -translate-y-1/2 z-[1] duration-500 origin-bottom-left delay-500"
             loading="lazy"
             src="/EP3.png"
             alt="Explore 3"
           />
           <img
             ref={(e) => (ProjectImagesRef.current[1] = e)}
-            className="w-[350px] absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[2] duration-500 origin-bottom-left delay-500"
+            className="w-[350px] absolute  top-1/2 left-1/2 -translate-x-[calc(50%-40px)] -translate-y-1/2 z-[2] duration-500 origin-bottom-left delay-500"
             loading="lazy"
             src="/EP2.png"
             alt="Explore 2"
           />
           <img
             ref={(e) => (ProjectImagesRef.current[2] = e)}
-            className="w-[350px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[3] duration-500 origin-bottom-left delay-500"
+            className="w-[350px] absolute top-1/2 left-1/2 -translate-x-[calc(50%-40px)] md:-translate-x-[30%] -translate-y-1/2 z-[3] duration-500 origin-bottom-left delay-500"
             loading="lazy"
             src="/EP1.png"
             alt="Explore 1"
           />
         </div>
-        <div className="flex-1">
-          <h2 className="text-[3rem] leading-[2.5rem] md:text-[4.5rem] flex items-center justify-center mb-8 font-light scale-y-[1.5] tracking-wider  md:leading-[4rem] font-luckiest text-secondary w-fit">
+        <div className="-order-1 md:order-2 md:mb-0 w-full md:flex-1">
+          <h2 className="PageHeader md:text-left">
             Explore Our
             <br /> Projects
           </h2>
@@ -91,8 +90,9 @@ function ExploreProjects() {
             inspired, collaborate, and witness the future of tech unfold!
           </p>
           <CustomButton
+            link="/projects"
             spanStyle="bg-therd"
-            linkStyle="text-therd bg-secondary border-secondary hover:text-secondary hover:bg-therd"
+            linkStyle="text-therd mx-auto mb-10 md:mx-0 bg-secondary border-secondary hover:text-secondary hover:bg-therd"
             text="Explore"
           />
         </div>

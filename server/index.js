@@ -11,6 +11,7 @@ import ParticipantRouter from "./routes/ParticipantRouter.js";
 import EventRouter from "./routes/EventRouter.js";
 import VisitorRouter from "./routes/VisitorRouter.js";
 import DepartmentRouter from "./routes/DepartmentRouter.js";
+import RegistrationRouter from "./routes/RegistrationRouter.js";
 
 dotenv.config();
 
@@ -38,6 +39,7 @@ app.use("/participant", ParticipantRouter);
 app.use("/event", EventRouter);
 app.use("/visitor", VisitorRouter);
 app.use("/department", DepartmentRouter);
+app.use("/registration", RegistrationRouter);
 app.use(AdminRouter);
 
 const MONGO_URL = process.env.MONGO_URL;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { MdEvent, MdLogout, MdOutlineDashboard } from "react-icons/md";
@@ -6,11 +6,12 @@ import { FaBuilding, FaUserGraduate, FaUsers } from "react-icons/fa";
 import { useAdminContext } from "../../context/Admin";
 import { FaFolderClosed } from "react-icons/fa6";
 import { useEffect } from "react";
-import useAuth from "../../hooks/useAuth";
+import DeletePopup from "../../components/DeletePopup";
 
 const Dashboard = () => {
   const { admin, logout } = useAdminContext();
   const navigate = useNavigate();
+  const [popup, setPopup] = useState(false);
   useEffect(() => {
     if (!admin) {
       navigate("/");
@@ -60,6 +61,15 @@ const Dashboard = () => {
   ];
   return (
     <div className={`w-full bg-therd h-dvh  py-1 pr-1 text-whiteColor p-0`}>
+      {popup && (
+        <DeletePopup
+          text="Log Out"
+          subText="Click On Confirm To Log Out"
+          deleteFunc={logOut}
+          cancel={() => setPopup(false)}
+          underText="Confirm"
+        />
+      )}
       <div className="h-full w-full flex items-center flex-wrap">
         <div className="w-[76px] bg-therd linksContainer overflow-hidden hover:w-[280px] duration-500 h-full flex justify-center items-center">
           <div className="w-full h-fit ">
@@ -79,7 +89,7 @@ const Dashboard = () => {
                 </NavLink>
               ))}
             <button
-              onClick={() => logOut()}
+              onClick={() => setPopup(true)}
               className="flex justify-center items-center w-fit px-5 py-2.5 gap-5"
             >
               {" "}

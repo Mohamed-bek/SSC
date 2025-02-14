@@ -4,6 +4,7 @@ import path from "path";
 import ejs from "ejs";
 import fs from "fs";
 import { transporter } from "../utilitis/sendMail.js";
+import Admin from "../models/Admin.js";
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
@@ -25,7 +26,7 @@ export const AddMember = async (req, res) => {
     if (!file)
       return res.status(404).json({ error: "The Member Should Have an Image" });
     const { secure_url } = await cloudinary.v2.uploader.upload(file.path, {
-      folder: "courses",
+      folder: "Member",
     });
     if (!secure_url)
       return res
@@ -107,15 +108,69 @@ export const GetMembers = async (req, res) => {
   }
 };
 
+export const GetMember = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const member = await Member.findById(id).select("-password");
+    res.status(200).json({ member });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 export const UpdateMember = async (req, res) => {
   try {
-    const info = req.body;
     const { id } = req.params;
-    const member = await Member.findByIdAndUpdate(id, info, {
-      new: true,
-    });
-    if (!member) return res.status(404).json({ error: "The Member Not found" });
-    res.status(200).json({ message: "Success!", member });
+    const {
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      department,
+      description,
+      media,
+      work,
+    } = req.body;
+    const member = await Member.findById(id);
+    if (firstName && member.firstName !== firstName) {
+      member.firstName = firstName;
+    }
+    if (lastName && member.lastName !== lastName) {
+      member.lastName = lastName;
+    }
+    if (description && member.description !== description) {
+      member.description = description;
+    }
+    if (email && member.email !== email) {
+      member.email = email;
+    }
+    if (phoneNumber && member.phoneNumber !== phoneNumber) {
+      member.phoneNumber = phoneNumber;
+    }
+    if (department && member.department !== department) {
+      member.department = department;
+    }
+    if (work && member.work !== work) {
+      member.work = work;
+    }
+    if (media?.githubUrl && member?.work?.github !== githubUrl) {
+      member.work.github = media?.githubUrl;
+    }
+    if (media?.portfolioUrl && member?.work?.portfolio !== portfolioUrl) {
+      member.work.portfolio = media?.portfolioUrl;
+    }
+    if (media?.linkedinUrl && member?.work?.linkedin !== linkedinUrl) {
+      member.work.linkedin = media?.linkedinUrl;
+    }
+    const imageFile = req.file;
+    if (imageFile) {
+      const image = await cloudinary.v2.uploader.upload(imageFile.path, {
+        folder: "Member",
+      });
+      member.image = image.secure_url;
+    }
+    await member.save();
+    res.status(200).json({ member });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -124,8 +179,10 @@ export const UpdateMember = async (req, res) => {
 export const DeleteMember = async (req, res) => {
   try {
     const { id } = req.params;
+
     const member = await Member.findByIdAndDelete(id);
     if (!member) return res.status(404).json({ error: "The Member Not found" });
+
     res.status(200).json({ message: "Success!" });
   } catch (error) {
     res.status(500).json({ error: error.message });

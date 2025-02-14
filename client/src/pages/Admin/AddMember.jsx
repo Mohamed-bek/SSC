@@ -10,7 +10,6 @@ import { useEffect } from "react";
 const AddMember = () => {
   const [departments, setDepartments] = useState([]);
   const [loading, setLoading] = useState(false);
-
   const API = useAxios();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({

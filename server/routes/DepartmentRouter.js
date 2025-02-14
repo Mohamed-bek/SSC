@@ -1,9 +1,11 @@
 import { Router } from "express";
 import {
   AddDepartment,
-  ChangeLeaderAndCoLeader,
   GetDepartements,
   RemoveMember,
+  GetDepartement,
+  UpdateDepartment,
+  deleteDepartment,
 } from "../controllers/DepartmentController.js";
 import { authenticateToken } from "../middleware/Auth.js";
 import { upload } from "../utilitis/multerConf.js";
@@ -16,12 +18,17 @@ DepartmentRouter.post(
   upload.single("file"),
   AddDepartment
 );
+
 DepartmentRouter.get("/", GetDepartements);
+DepartmentRouter.get("/:id", GetDepartement);
+
 DepartmentRouter.put(
-  "/leaders/:id",
+  "/:id",
   authenticateToken,
-  ChangeLeaderAndCoLeader
+  upload.single("file"),
+  UpdateDepartment
 );
 DepartmentRouter.patch("/member/:id", authenticateToken, RemoveMember);
+DepartmentRouter.delete("/:id", authenticateToken, deleteDepartment);
 
 export default DepartmentRouter;

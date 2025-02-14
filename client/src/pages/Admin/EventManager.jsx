@@ -1,23 +1,35 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { FaPlus, FaTrash } from "react-icons/fa";
+import { FaPen, FaPlus, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import useAxios from "../../hooks/useAxios";
+import { toast, ToastContainer } from "react-toastify";
+import DeletePopup from "../../components/DeletePopup";
+import Loader from "../../components/Loader";
 
 function EventManager() {
   const API = useAxios();
   const [events, setEvents] = useState([]);
-  const getEvents = async (req, res) => {
+  const [popup, setPopup] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [eventToDelete, setEventToDelete] = useState(null);
+
+  const getEvents = async () => {
     try {
+      setLoading(true);
       const { data } = await API.get(`${process.env?.REACT_APP_API_URL}event`);
       setEvents(data.events);
     } catch (error) {
-      console.log(error);
+      toast.error("Failed To Fetch Events");
+    } finally {
+      setLoading(false);
     }
   };
+
   useEffect(() => {
     getEvents();
   }, []);
+
   const formatEventDates = (startDate, endDate) => {
     const start = new Date(startDate);
     const end = endDate ? new Date(endDate) : null;
@@ -44,8 +56,48 @@ function EventManager() {
       month: "short",
     })} ${start.getFullYear()}`;
   };
+
+  const cancelDelete = () => {
+    setEventToDelete(null);
+    setPopup(false);
+  };
+
+  const deleteEvent = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      await API.delete(
+        process.env.REACT_APP_API_URL + `event/${eventToDelete._id}`
+      );
+      setEvents((prev) =>
+        prev.filter((event) => event._id !== eventToDelete._id)
+      );
+      toast.success("Event Deleted Successfully");
+      cancelDelete();
+    } catch (error) {
+      toast.error(error?.response?.data?.error || "Failed To Delete Event");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const selectEventToDelete = (event) => {
+    setEventToDelete(event);
+    setPopup(true);
+  };
+
   return (
     <div className="w-full h-full rounded-lg flex flex-col gap-3">
+      <ToastContainer theme="dark" />
+      {loading && <Loader />}
+      {popup && (
+        <DeletePopup
+          cancel={cancelDelete}
+          deleteFunc={deleteEvent}
+          text="Delete Event"
+          subText={`Are you sure you want to delete ${eventToDelete.title} event`}
+        />
+      )}
       <div className="flex justify-between items-center px-4 py-3 rounded-lg  bg-therd">
         <h1 className="text-2xl text-secondary font-medium"> Events </h1>
         <Link
@@ -98,9 +150,16 @@ function EventManager() {
                 {formatEventDates(event.date.start, event.date?.end)}
               </div>
               <div className="w-[120px] text-center flex items-center justify-center gap-2">
+                <Link
+                  title="delete"
+                  to={`update-event/${event._id}`}
+                  className="text-blue-500 ml-2"
+                >
+                  <FaPen />
+                </Link>
                 <button
                   title="delete"
-                  // onClick={() => deleteB(departement?._id)}
+                  onClick={() => selectEventToDelete(event)}
                   className="text-red-500 ml-2"
                 >
                   <FaTrash />

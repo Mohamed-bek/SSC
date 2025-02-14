@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { FaCalendar, FaLocationDot } from "react-icons/fa6";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { format } from "date-fns";
+import EventRegistration from "../components/EventRegistration";
+import Loader from "../components/Loader";
+import axios from "axios";
 
 const EventDetail = () => {
   const { id } = useParams();
   const [event, setEvent] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [visible, setVisible] = useState(false);
   const [timeLeft, setTimeLeft] = useState({
     days: null,
     hours: null,
@@ -15,44 +18,21 @@ const EventDetail = () => {
     seconds: null,
   });
 
+  const GetEvent = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_API_URL}event/${id}`
+      );
+      setEvent(data.event);
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const getEvent = async () => {
-      setEvent({
-        _id: "1",
-        title: "React Advanced Workshop 2025",
-        image: "/univ.jpg",
-        location: "Tech Hub, Silicon Valley",
-        date: {
-          start: "2025-03-15T09:00:00",
-          end: "2025-03-15T17:00:00",
-        },
-        description:
-          "Join us for an intensive workshop on advanced React patterns, hooks, and performance optimization techniques. Perfect for senior developers looking to level up their React skills.",
-        speakers: [
-          {
-            firstName: "Sarah",
-            lastName: "Johnson",
-            image: "/me.png",
-          },
-          {
-            firstName: "Michael",
-            lastName: "Chen",
-            image: "/me.png",
-          },
-          {
-            firstName: "Michael",
-            lastName: "Chen",
-            image: "/me.png",
-          },
-          {
-            firstName: "Michael",
-            lastName: "Chen",
-            image: "/me.png",
-          },
-        ],
-      });
-    };
-    getEvent();
+    GetEvent();
   }, [id]);
 
   useEffect(() => {
@@ -92,62 +72,124 @@ const EventDetail = () => {
     if (isNaN(parsedDate)) return "Invalid date";
     return format(parsedDate, "dd MMMM yyyy");
   };
+  const formatEventDates = (startDate, endDate) => {
+    const start = new Date(startDate);
+    const end = endDate ? new Date(endDate) : null;
+
+    if (!end) {
+      return `${start.getDate()} ${start.toLocaleString("default", {
+        month: "short",
+      })} ${start.getFullYear()}`;
+    }
+
+    if (
+      start.getMonth() === end.getMonth() &&
+      start.getFullYear() === end.getFullYear()
+    ) {
+      return `${start.getDate()} - ${end.getDate()} ${start.toLocaleString(
+        "default",
+        { month: "short" }
+      )} ${start.getFullYear()}`;
+    }
+
+    return `${start.getDate()} ${start.toLocaleString("default", {
+      month: "short",
+    })} - ${end.getDate()} ${end.toLocaleString("default", {
+      month: "short",
+    })} ${start.getFullYear()}`;
+  };
 
   const isEventPassed =
     new Date(event?.date?.end || event?.date?.start) < new Date();
 
   return (
-    <div className="min-h-screen bg-therd overflow-y-auto">
-      <div className="relative h-[70vh] mb-20">
+    <div className="min-h-dvh bg-therd overflow-y-auto">
+      {loading && <Loader />}
+      {visible && (
+        <EventRegistration
+          event={event}
+          setVisible={setVisible}
+          setLoading={setLoading}
+        />
+      )}
+      <div className="relative h-[60vh] mb-10 md:mb-20">
         <div className="absolute inset-0 bg-black/20 z-10" />
         <img
           src={event?.image || "/default-event.jpg"}
           alt={event?.title}
           className="w-full h-full object-cover"
         />
-        {isEventPassed && (
-          <div className="absolute top-10 right-7 z-40 px-4 py-2 bg-therd text-secondary rounded-md text-lg font-medium">
+        {isEventPassed ? (
+          <div className="absolute top-3 right-10 z-40 px-4 py-2 bg-secondary text-therd rounded-md text-lg font-medium">
             Event Completed
           </div>
+        ) : (
+          <button
+            onClick={() => setVisible(true)}
+            className=" absolute top-3 right-10 bg-secondary px-5 py-2 rounded-lg text-therd cursor-pointer text-xl font-semibold z-20 hover:bg-grayColor duration-100"
+          >
+            {" "}
+            Register{" "}
+          </button>
         )}
-        <div className="mt-6 p-4 rounded-lg text-center font-luckiest flex items-center justify-around mx-auto max-w-5xl cont absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 z-50 shadow-lg bg-secondary text-therd">
-          <div className="px-5">
-            <h2 className="text-[4rem] font-luckiest tracking-wider scale-110">
-              {timeLeft?.days}
+        <div className="h-fit pt-2.5 md:pt-10 pb-1 md:pb-4 rounded-lg text-center font-luckiest flex items-center justify-around mx-auto max-w-5xl w-[90%] absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 z-30 shadow-lg bg-secondary text-therd">
+          {isEventPassed ? (
+            <h2 className="text-red-500 text-xl md:text-4xl font-semibold font-inter  -mt-6">
+              {" "}
+              This event has ended. Stay tuned for more!{" "}
             </h2>
-            <h3 className="text-lg scale-y-125 -mt-3"> Days </h3>
-          </div>
-          <div className="px-5">
-            <h2 className="text-[4rem] font-luckiest tracking-wider scale-110">
-              {timeLeft?.hours}
-            </h2>
-            <h3 className="text-lg scale-y-125 -mt-3"> Hours </h3>
-          </div>
-          <div className="px-5">
-            <h2 className="text-[4rem] font-luckiest tracking-wider scale-110">
-              {timeLeft?.minutes}
-            </h2>
-            <h3 className="text-lg scale-y-125 -mt-3"> Minutes </h3>
-          </div>
-          <div className="px-5">
-            <h2 className=" text-[4rem] font-luckiest tracking-wider scale-110">
-              {timeLeft?.seconds}
-            </h2>
-            <h3 className="text-lg  scale-y-125 -mt-3"> Seconds </h3>
-          </div>
+          ) : (
+            <>
+              <div className="px-2 md:px-5">
+                <h2 className="text-4xl md:text-[4rem] font-luckiest tracking-wider scale-110">
+                  {timeLeft?.days}
+                </h2>
+                <h3 className="text-sm md:text-lg scale-y-125 -mt-2 md:mt-1">
+                  {" "}
+                  Days{" "}
+                </h3>
+              </div>
+              <div className="px-2 md:px-5">
+                <h2 className="text-4xl md:text-[4rem] font-luckiest tracking-wider scale-110">
+                  {timeLeft?.hours}
+                </h2>
+                <h3 className="text-sm md:text-lg scale-y-125 -mt-2 md:mt-1">
+                  {" "}
+                  Hours{" "}
+                </h3>
+              </div>
+              <div className="px-2 md:px-5">
+                <h2 className="text-4xl md:text-[4rem] font-luckiest tracking-wider scale-110">
+                  {timeLeft?.minutes}
+                </h2>
+                <h3 className="text-sm md:text-lg scale-y-125 -mt-2 md:mt-1">
+                  {" "}
+                  Minutes{" "}
+                </h3>
+              </div>
+              <div className="px-2 md:px-5">
+                <h2 className="text-4xl md:text-[4rem] font-luckiest tracking-wider scale-110">
+                  {timeLeft?.seconds}
+                </h2>
+                <h3 className="text-sm md:text-lg scale-y-125 -mt-2 md:mt-1">
+                  {" "}
+                  Seconds{" "}
+                </h3>
+              </div>
+            </>
+          )}
         </div>
       </div>
 
       <div className="py-5">
-        <div className="cont items-center flex flex-col md:flex-row md:justify-evenly md:items-center text-lg text-therd gap-4 mb-5 font-semibold max-w-5xl">
-          <div className="flex items-center justify-center bg-secondary rounded-lg py-2.5 px-4 gap-3 w-[370px]">
+        <div className="cont items-center flex flex-col md:flex-row md:justify-evenly md:items-center text-sm md:text-lg text-therd gap-4 mb-5 font-semibold max-w-5xl">
+          <div className="flex items-center justify-center bg-secondary rounded-lg py-2.5 px-4 gap-3 w-[280px] md:w-[370px]">
             <FaCalendar className="w-6 h-6" />
-            <span>
-              {event?.date?.start ? formatDate(event?.date.start) : "TBD"}
-              {event?.date?.end ? ` - ${formatDate(event?.date.end)}` : ""}
+            <span className="text-nowrap">
+              {formatEventDates(event?.date?.start, event?.date?.end)}
             </span>
           </div>
-          <div className="flex items-center justify-center bg-secondary rounded-lg py-2.5 px-4 gap-3 w-[370px]">
+          <div className="flex items-center justify-center bg-secondary rounded-lg py-2.5 px-4 gap-3 w-[280px] md:w-[370px]">
             <FaLocationDot className="w-6 h-6" />
             <span>{event?.location}</span>
           </div>
@@ -156,18 +198,18 @@ const EventDetail = () => {
 
       {/* {Contente } */}
       <div className="w-full py-5">
-        <h3 className="bg-secondary text-therd w-fit text-xl rounded-full font-medium mx-auto py-2 px-5 mb-5">
+        <h3 className="bg-secondary text-therd w-fit text-center text-lg md:text-xl rounded-full font-medium mx-auto py-2 px-3 md:px-5 mb-5">
           Welcome To {event?.title} Event
         </h3>
-        <p className="text-secondary max-w-5xl px-10 w-full text-xl font-medium text-center mx-auto mb-5">
+        <p className="text-secondary max-w-5xl px-3 md:px-10 w-full text-base  md:text-xl font-light md:font-medium text-center mx-auto mb-5">
           {event?.description}
         </p>
         {event?.speakers && event?.speakers?.length > 0 && (
-          <div className="cont mx-auto bg-secondary rounded-xl shadow-xl p-5">
-            <h2 className="text-3xl font-bold text-therd mb-5 text-center">
+          <div className="w-[90%] mx-auto bg-secondary rounded-xl shadow-xl p-1 md:p-5">
+            <h2 className="text-2xl md:text-3xl font-bold text-therd mb-2 md:mb-5 text-center">
               Featured Speakers
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 bg-therd p-5 rounded-xl">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-8 bg-therd p-2 md:p-5 rounded-xl">
               {event?.speakers.map((speaker, index) => (
                 <div
                   key={index}

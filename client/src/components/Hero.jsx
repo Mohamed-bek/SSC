@@ -18,7 +18,7 @@ function Hero() {
         ></div>
       </div>
       <div className="text-center h-fit pt-24 px-10 p-20 relative z-40">
-        <h2 className="text-[3rem] md:text-[4.5rem] flex items-center justify-center mx-auto mb-5 font-light scale-y-[2] tracking-wider Header font-luckiest text-primary">
+        <h2 className="text-[2.1rem] sm:text-5xl md:text-[4.5rem] flex items-center justify-center mx-auto mb-5 font-light scale-y-[2] tracking-wider Header font-luckiest text-primary">
           {"Start Coding Club".split("").map((letter, i) => (
             <span
               key={i}
@@ -31,10 +31,10 @@ function Hero() {
             </span>
           ))}
         </h2>
-        <h3 className="text-3xl text-secondary tracking-wide font-bold uppercase  mb-5 -mt-4">
+        <h3 className="text-lg sm:text-xl md:text-3xl text-secondary tracking-wide font-bold uppercase  mb-3 -mt-4">
           Where Innovation Fuels the Next Generation
         </h3>
-        <p className="text-sm md:text-xl  font-semibold text-secondary  max-w-5xl mx-auto capitalize md:leading-7">
+        <p className="text-sm sm:text-lg sm:font-medium md:text-xl font-light md:font-semibold text-secondary  max-w-5xl mx-auto capitalize md:leading-7">
           Welcome to the Start Coding Club – where creativity meets code! 🚀
           Dive into an empowering community of learners and innovators mastering
           programming, design, networking, freelancing, and client skills.

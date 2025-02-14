@@ -107,8 +107,8 @@ function Statistics() {
   };
 
   return (
-    <div className="w-full h-full p-4 relative">
-      <div className="py-2 px-5 rounded-2xl bg-therd text-secondary shadow-sm flex justify-between items-center mb-3">
+    <div className="w-full h-full p-3 relative">
+      <div className="py-2 px-5 rounded-lg bg-therd text-secondary shadow-sm flex justify-between items-center mb-3">
         <div>
           <h2 className="text-xl font-bold mb-0.5">
             Welcome Back, {admin?.firstName}
@@ -124,7 +124,7 @@ function Statistics() {
         </div>
       </div>
       <div className="w-full flex justify-between items-center gap-3 mb-3">
-        <div className="bg-therd flex justify-between  flex-1 items-start p-4 rounded-xl">
+        <div className="bg-therd flex justify-between  flex-1 items-start p-4 rounded-lg">
           <div>
             <h3 className="font-bold text-3xl mb-0.5">
               {formatNumber(visitors)}
@@ -134,7 +134,7 @@ function Statistics() {
           <FaUsers className="text-[3.25rem] bg-[#e0c0ff3c] rounded-full p-1.5" />
           {/* <img className="w-14" src="/visitorsIcons.png" /> */}
         </div>
-        <div className="bg-therd flex justify-between  flex-1 items-start p-4 rounded-xl">
+        <div className="bg-therd flex justify-between  flex-1 items-start p-4 rounded-lg">
           <div>
             <h3 className="font-bold text-3xl mb-0.5">
               {formatNumber(members)}
@@ -144,7 +144,7 @@ function Statistics() {
           <FaUsers className="text-[3.25rem] bg-[#e0c0ff3c] rounded-full p-1.5" />
           {/* <img className="w-14" src="/visitorsIcons.png" /> */}
         </div>
-        <div className="bg-therd flex justify-between  flex-1 items-start p-4 rounded-xl">
+        <div className="bg-therd flex justify-between  flex-1 items-start p-4 rounded-lg">
           <div>
             <h3 className="font-bold text-3xl mb-0.5">
               {formatNumber(participants)}
@@ -154,7 +154,7 @@ function Statistics() {
           <FaUsers className="text-[3.25rem] bg-[#e0c0ff3c] rounded-full p-1.5" />
           {/* <img className="w-14" src="/visitorsIcons.png" /> */}
         </div>
-        <div className="bg-therd flex justify-between  flex-1 items-start p-4 rounded-xl">
+        <div className="bg-therd flex justify-between  flex-1 items-start p-4 rounded-lg">
           <div>
             <h3 className="font-bold text-3xl mb-0.5">
               {formatNumber(events)}
@@ -164,7 +164,7 @@ function Statistics() {
           <FaUsers className="text-[3.25rem] bg-[#e0c0ff3c] rounded-full p-1.5" />
           {/* <img className="w-14" src="/visitorsIcons.png" /> */}
         </div>
-        <div className="bg-therd flex justify-between  flex-1 items-start p-4 rounded-xl">
+        <div className="bg-therd flex justify-between  flex-1 items-start p-4 rounded-lg">
           <div>
             <h3 className="font-bold text-3xl mb-0.5">
               {formatNumber(projects)}
@@ -175,17 +175,17 @@ function Statistics() {
           {/* <img className="w-14" src="/visitorsIcons.png" /> */}
         </div>
       </div>
-      <div className="flex h-[570px] items-start justify-between gap-4">
-        <div className="bg-therd  flex-[2] h-full flex justify-center items-center rounded-xl p-4">
+      <div className="flex h-[570px] items-start justify-between gap-3">
+        <div className="bg-therd  flex-[2] h-full flex justify-center items-center rounded-lg p-4">
           {" "}
           <ChartComponent data={data} options={options} type="line" />{" "}
         </div>
-        <div className="flex-1 flex flex-col justify-between items-stretch h-full">
-          <div className="bg-therd rounded-lg p-6 cursor-pointer group relative overflow-hidden">
+        <div className="flex-1 flex flex-col justify-between items-stretch h-full gap-3">
+          <div className="bg-therd rounded-lg p-6 cursor-pointer group relative overflow-hidden flex-1">
             <div className="absolute right-0 top-0 w-32 h-32 bg-[#e0c0ff32] rounded-full -translate-y-1/2 translate-x-1/2" />
 
             <div className="relative">
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-3">
                 <div className="bg-[#e0c0ff32] p-2 rounded-lg ">
                   <FaUsers className="w-8 h-8 text-secondary" />
                 </div>
@@ -216,11 +216,11 @@ function Statistics() {
             </div>
           </div>
 
-          <div className="bg-therd rounded-lg p-6 cursor-pointer group relative overflow-hidden">
+          <div className="bg-therd rounded-lg p-6 cursor-pointer group relative overflow-hidden flex-1">
             <div className="absolute right-0 top-0 w-24 h-24 bg-[#e0c0ff32] rounded-full -translate-y-1/2 translate-x-1/2" />
 
             <div className="relative">
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-3">
                 <div className="bg-[#e0c0ff32] p-2 rounded-lg">
                   <FaCalendar className="w-7 h-7 text-secondary" />
                 </div>
@@ -238,11 +238,11 @@ function Statistics() {
             </div>
           </div>
 
-          <div className="bg-therd rounded-lg p-6 cursor-pointer group relative overflow-hidden">
+          <div className="bg-therd flex-1 rounded-lg p-6 cursor-pointer group relative overflow-hidden">
             <div className="absolute right-0 top-0 w-24 h-24 bg-[#e0c0ff32] rounded-full -translate-y-1/2 translate-x-1/2" />
 
             <div className="relative">
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-3">
                 <div className="bg-[#e0c0ff32] p-2 rounded-lg">
                   <FaFolderPlus className="w-7 h-7 text-secondary" />
                 </div>

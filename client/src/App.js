@@ -28,6 +28,11 @@ import ProjectManager from "./pages/Admin/ProjectManager";
 import AdminProject from "./pages/Admin/AdminProject";
 import useAuth from "./hooks/useAuth";
 import { useEffect } from "react";
+import DepartmentUpdate from "./pages/Admin/DepartmentUpdate";
+import AddProject from "./pages/Admin/AddProject";
+import ProjectUpdate from "./pages/Admin/ProjectUpdate";
+import MemberUpdate from "./pages/Admin/MemberUpdate";
+import EventUpdate from "./pages/Admin/EventUpdate";
 
 function App() {
   const navigate = useNavigate();
@@ -38,9 +43,8 @@ function App() {
     }
   }, [admin]);
   return (
-    <div className="min-h-dvh relative overflow-hidden">
+    <div className="min-h-dvh relative bg-therd overflow-hidden">
       {/* <Stars /> */}
-      <div className="fixed bottom-0 left-0 w-dvw h-dvh BackPurple z-[-10]"></div>
       <div className="w-full h-full relative z-10">
         {!admin && <HeaderHome />}
         <Routes>
@@ -59,18 +63,25 @@ function App() {
             <Route path="manage-members" element={<AdminMember />}>
               <Route path="" element={<ClubMembers />} />
               <Route path="add-member" element={<AddMember />} />
+              <Route path="update-member/:id" element={<MemberUpdate />} />
             </Route>
             <Route path="manage-departments" element={<AdminDepartment />}>
               <Route path="" element={<DepartementManager />} />
               <Route path="add-department" element={<AddDepartment />} />
+              <Route
+                path="update-department/:id"
+                element={<DepartmentUpdate />}
+              />
             </Route>
             <Route path="manage-events" element={<AdminDepartment />}>
               <Route path="" element={<EventManager />} />
               <Route path="add-event" element={<AddEvent />} />
+              <Route path="update-event/:id" element={<EventUpdate />} />
             </Route>
             <Route path="manage-projects" element={<AdminProject />}>
               <Route path="" element={<ProjectManager />} />
-              <Route path="add-event" element={<AddEvent />} />
+              <Route path="add-project" element={<AddProject />} />
+              <Route path="update-project/:id" element={<ProjectUpdate />} />
             </Route>
           </Route>
         </Routes>

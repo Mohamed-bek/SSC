@@ -1,150 +1,3 @@
-// import React, { useState, useEffect } from "react";
-
-// const FloatingCarousel = () => {
-//   const [activeIndex, setActiveIndex] = useState(0);
-//   const [isHovering, setIsHovering] = useState(false);
-
-//   const slides = [
-//     {
-//       id: 1,
-//       title: "Cosmic Journey",
-//       description: "Explore the unknown",
-//       image: "/slide1.png",
-//     },
-//     {
-//       id: 2,
-//       title: "Ocean Dreams",
-//       description: "Dive into beauty",
-//       image: "/slide2.png",
-//     },
-//     {
-//       id: 3,
-//       title: "Forest Magic",
-//       description: "Nature's secrets",
-//       image: "/slide3.png",
-//     },
-//     {
-//       id: 4,
-//       title: "Desert Whispers",
-//       description: "Silent beauty",
-//       image: "/slide4.png",
-//     },
-//     {
-//       id: 5,
-//       title: "Desert Whispers",
-//       description: "Silent beauty",
-//       image: "/slide5.png",
-//     },
-//   ];
-
-//   const nextSlide = () => {
-//     setActiveIndex((prev) => (prev + 1) % slides.length);
-//   };
-
-//   const prevSlide = () => {
-//     setActiveIndex((prev) => (prev - 1 + slides.length) % slides.length);
-//   };
-
-//   useEffect(() => {
-//     if (!isHovering) {
-//       const interval = setInterval(nextSlide, 200000);
-//       return () => clearInterval(interval);
-//     }
-//   }, [isHovering]);
-
-//   const getCardStyles = (index) => {
-//     const diff = (index - activeIndex + slides.length) % slides.length;
-//     const translateX =
-//       diff === 0 ? 0 : diff === 1 ? 95 : diff === slides.length - 1 ? -95 : 200;
-//     const translateY = diff === 0 ? 0 : 0;
-//     const translateZ = diff === 0 ? 0 : -200;
-//     const rotateY =
-//       diff === 0 ? 0 : diff === 1 ? 30 : diff === slides.length - 1 ? -30 : 60;
-//     const opacity =
-//       diff === 0 ? 1 : diff === 1 || diff === slides.length - 1 ? 0.6 : 0.3;
-//     const scale = diff === 0 ? 1 : 0.9;
-//     return {
-//       transform: `perspective(2000px) translateX(${translateX}%) translateY(${translateY}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`,
-//       opacity,
-//       zIndex: slides.length - diff,
-//     };
-//   };
-
-//   return (
-//     <div
-//       className="relative h-screen w-full bg-gray-900 overflow-hidden"
-//       onMouseEnter={() => setIsHovering(true)}
-//       onMouseLeave={() => setIsHovering(false)}
-//     >
-//       {/* Cards Container */}
-//       <div className="absolute inset-0 flex items-center justify-center">
-//         {slides.map((slide, index) => (
-//           <div
-//             key={slide.id}
-//             className="absolute w-full max-w-2xl transition-all duration-700 ease-out"
-//             style={getCardStyles(index)}
-//           >
-//             <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-2xl group">
-//               {/* Background Gradient */}
-//               <div className={`absolute inset-0 bg-[#0000000c] `} />
-
-//               {/* Image */}
-//               <img
-//                 src={slide.image}
-//                 alt={slide.title}
-//                 className="absolute inset-0 w-full h-full object-cover mix-blend-overlay"
-//               />
-
-//               {/* Content */}
-//               <div className="absolute inset-0 p-8 flex flex-col justify-end bg-gradient-to-t from-black/60 to-transparent">
-//                 <h2 className="text-4xl font-bold text-white mb-2 transform group-hover:translate-x-4 transition-transform duration-300">
-//                   {slide.title}
-//                 </h2>
-//                 <p className="text-xl text-white/80 transform group-hover:translate-x-6 transition-transform duration-500 delay-100">
-//                   {slide.description}
-//                 </p>
-//               </div>
-//             </div>
-//           </div>
-//         ))}
-//       </div>
-
-//       {/* Navigation Buttons */}
-//       <div className="absolute bottom-8 left-0 right-0 flex justify-center items-center gap-4 z-50">
-//         <button
-//           onClick={prevSlide}
-//           className="p-3 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-colors text-white"
-//         >
-//           ←
-//         </button>
-
-//         {/* Indicators */}
-//         <div className="flex gap-2">
-//           {slides.map((_, index) => (
-//             <button
-//               key={index}
-//               onClick={() => setActiveIndex(index)}
-//               className={`rounded-full transition-all duration-300 ${
-//                 index === activeIndex
-//                   ? "h-3 w-8 bg-primary"
-//                   : "w-3 h-3  bg-secondary hover:bg-primary"
-//               }`}
-//             />
-//           ))}
-//         </div>
-
-//         <button
-//           onClick={nextSlide}
-//           className="p-3 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-colors text-white"
-//         >
-//           →
-//         </button>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default FloatingCarousel;
 import React, { useState, useEffect, useRef, useCallback } from "react";
 
 const FloatingCarousel = () => {
@@ -160,34 +13,44 @@ const FloatingCarousel = () => {
 
   const slides = [
     {
-      id: 1,
-      title: "Cosmic Journey",
-      description: "Explore the unknown",
-      image: "/slide1.png",
+      title: "Sessions & Workshops",
+      description:
+        "The Sessions & Workshops department focuses on enhancing learning through interactive sessions and hands-on workshops. Our goal is to equip members with valuable skills and practical knowledge that contribute to their personal and professional growth",
+      image: "/workshop.jpg",
+      resume:
+        "This department ensures that learning is not just theoretical but also practical, engaging, and impactful.",
     },
     {
-      id: 2,
-      title: "Ocean Dreams",
-      description: "Dive into beauty",
-      image: "/slide2.png",
+      title: "Events & Activities",
+      description:
+        "The Events & Activities department plays a key role in fostering community engagement and collaboration through well-planned events and challenges. Our focus is on creating interactive and enriching experiences that bring members together and enhance their skills.",
+      image: "/events.jpg",
+      resume:
+        "Through these activities, we aim to build a vibrant and connected community where members can learn, network, and grow together.",
     },
     {
-      id: 3,
-      title: "Forest Magic",
-      description: "Nature's secrets",
-      image: "/slide3.png",
+      title: "Freelance & Business",
+      description:
+        "The Freelance & Business department equips members with the essential skills needed to succeed in freelancing and business development. Our goal is to help members navigate the freelance world with confidence and an entrepreneurial mindset.",
+      image: "/freelance.jpg",
+      resume:
+        "This department empowers members to turn their skills into opportunities, grow their careers independently, and thrive in the freelance industry.",
     },
     {
-      id: 4,
-      title: "Desert Whispers",
-      description: "Silent beauty",
-      image: "/slide4.png",
+      title: "External Relations",
+      description:
+        "The External Relations department manages the club’s outreach efforts, fostering meaningful connections with organizations and securing sponsorships to support club initiatives.",
+      image: "/relations.jpg",
+      resume:
+        "This department plays a vital role in strengthening the club’s presence, ensuring sustainability, and creating valuable opportunities for members through strategic collaborations.",
     },
     {
-      id: 5,
-      title: "Desert Whispers",
-      description: "Silent beauty",
-      image: "/slide5.png",
+      title: "Social Media & Marketing",
+      description:
+        "The Social Media & Marketing department strengthens the club’s online presence, leveraging strategic content to engage a wider audience and build a dynamic community.",
+      image: "/social.jpg",
+      resume:
+        "This department plays a key role in expanding the club’s reach, fostering community interaction, and maintaining a strong digital presence through impactful content and branding.",
     },
   ];
 
@@ -310,9 +173,9 @@ const FloatingCarousel = () => {
   };
 
   return (
-    <div className="w-full h-dvh bg-black flex flex-col py-14">
+    <div className="w-full h-[90dvh] md:h-dvh bg-therd flex flex-col py-14">
       <div className="flex justify-center items-center h-fit w-full">
-        <h2 className="PageHeader text-secondary ">Department</h2>
+        <h2 className="PageHeader text-secondary py-0">Department</h2>
       </div>
 
       <div
@@ -325,14 +188,14 @@ const FloatingCarousel = () => {
         onTouchEnd={handleTouchEnd}
       >
         {/* Cards Container */}
-        <div className="absolute inset-0 flex items-center justify-center mb-10">
+        <div className="absolute w-[85%] md:w-full md:mx-0 mx-auto inset-0 flex items-center justify-center mb-10">
           {slides.map((slide, index) => (
             <div
               key={slide.id}
               className="absolute w-full max-w-2xl transition-all duration-500 ease-out"
               style={getCardStyles(index)}
             >
-              <div className="relative h-[500px] rounded-lg overflow-hidden shadow-2xl group ">
+              <div className="relative h-[300px] md:h-[500px] rounded-lg overflow-hidden shadow-2xl group">
                 <img
                   src={slide.image}
                   alt={slide.title}
@@ -340,7 +203,7 @@ const FloatingCarousel = () => {
                   loading="lazy"
                 />
                 <div className="absolute h-fit py-5 px-3 w-full bottom-0 translate-y-full group-hover:translate-y-0 duration-300 bg-black/75">
-                  <h3 className="w-full text-center text-primary text-2xl pt-2.5 font-light scale-y-150 font-luckiest">
+                  <h3 className="w-full text-center text-white text-2xl pt-2.5 font-light scale-y-150 font-luckiest">
                     {" "}
                     {slide.title}{" "}
                   </h3>

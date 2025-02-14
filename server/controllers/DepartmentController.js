@@ -30,13 +30,33 @@ export const AddDepartment = async (req, res) => {
   }
 };
 
-export const ChangeLeaderAndCoLeader = async (req, res) => {
+export const UpdateDepartment = async (req, res) => {
   try {
-    const { newLeaderId, newCoLeaderId } = req.body;
-    const { departmentId } = req.params;
-    const department = await Department.findById(departmentId);
-    if (newCoLeaderId) department.co_leader = newCoLeaderId;
-    if (newLeaderId) department.leader = newLeaderId;
+    const { id } = req.params;
+    const { name, description, leader, co_leader, responsibilities } = req.body;
+    const department = await Department.findById(id);
+    if (name && department.name !== name) {
+      department.name = name;
+    }
+    if (description && department.description !== description) {
+      department.description = description;
+    }
+    if (leader && department.leader !== leader) {
+      department.leader = leader;
+    }
+    if (co_leader && department.co_leader !== co_leader) {
+      department.co_leader = co_leader;
+    }
+    const responsibilitiesValues = JSON.parse(responsibilities);
+    department.responsibilities = responsibilitiesValues;
+    const imageFile = req.file;
+    if (imageFile) {
+      await cloudinary.v2.uploader.destroy(department.image.public_id);
+      const image = await cloudinary.v2.uploader.upload(imageFile.path, {
+        folder: "Department",
+      });
+      department.image = image;
+    }
     await department.save();
     res.status(200).json({ department });
   } catch (error) {
@@ -82,7 +102,13 @@ export const RemoveMember = async (req, res) => {
 
 export const GetDepartements = async (req, res) => {
   try {
-    const departments = await Department.find();
+    const departments = await Department.find().populate([
+      { path: "leader", select: "image firstName lastName" },
+      {
+        path: "co_leader",
+        select: "image firstName lastName",
+      },
+    ]);
 
     // Use map + Promise.all to ensure all async operations complete
     const ListOfDepartments = await Promise.all(
@@ -95,6 +121,29 @@ export const GetDepartements = async (req, res) => {
     );
 
     res.status(200).json({ departments: ListOfDepartments });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const GetDepartement = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const department = await Department.findById(id);
+
+    res.status(200).json({ department });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const deleteDepartment = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const department = await Department.findByIdAndDelete(id);
+    if (!department)
+      res.status(404).json({ error: "The Department does not exist" });
+    res.status(200).json({ message: "Department Deleted Successfully" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

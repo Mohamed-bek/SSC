@@ -16,3 +16,31 @@ export const MakeRegistration = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+export const GetRegistrations = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { firstName, lastName } = req.query;
+    let filter = { event: id };
+    if (firstName) {
+      filter.$or = [
+        { firstName: { $regex: firstName, $options: "i" } },
+        { lastName: { $regex: firstName, $options: "i" } },
+      ];
+    }
+
+    if (lastName) {
+      filter.$or = [
+        { firstName: { $regex: lastName, $options: "i" } },
+        { lastName: { $regex: lastName, $options: "i" } },
+      ];
+    }
+    const registrations = await Registration.find(filter).populate(
+      "event",
+      "title"
+    );
+    res.status(200).json({ registrations });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};

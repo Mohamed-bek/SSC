@@ -88,7 +88,6 @@ function EventManager() {
 
   return (
     <div className="w-full h-full rounded-lg flex flex-col gap-3">
-      <ToastContainer theme="dark" />
       {loading && <Loader />}
       {popup && (
         <DeletePopup
@@ -98,15 +97,18 @@ function EventManager() {
           subText={`Are you sure you want to delete ${eventToDelete.title} event`}
         />
       )}
-      <div className="flex justify-between items-center px-4 py-3 rounded-lg  bg-therd">
-        <h1 className="text-2xl text-secondary font-medium"> Events </h1>
-        <Link
-          to="add-event"
-          className="flex bg-secondary items-center gap-2 text-lg font-semibold rounded-xl px-4 py-2 text-therd"
-        >
-          {" "}
-          <FaPlus /> <span>Add Event </span>
-        </Link>
+      <div>
+        <ToastContainer theme="dark" />
+        <div className="flex justify-between items-center px-4 py-3 rounded-lg  bg-therd">
+          <h1 className="text-2xl text-secondary font-medium"> Events </h1>
+          <Link
+            to="add-event"
+            className="flex bg-secondary items-center gap-2 text-lg font-semibold rounded-xl px-4 py-2 text-therd"
+          >
+            {" "}
+            <FaPlus /> <span>Add Event </span>
+          </Link>
+        </div>
       </div>
       <div className="flex-1 bg-therd rounded-lg overflow-hidden">
         <header className="flex items-center text-secondary justify-between p-4 bg-therd border-b border-grayColor">
@@ -114,6 +116,8 @@ function EventManager() {
           <div className="w-[200px] text-start pl-5">Location</div>
           <div className="w-[200px] text-center">Speakers</div>
           <div className="w-[200px] text-center pl-5">Date</div>
+          <div className="w-[200px] text-center pl-5">Gellery</div>
+          <div className="w-[200px] text-center pl-5">Registrations</div>
           <div className="w-[120px] text-center">Manage</div>
         </header>
         <div className=" overflow-y-auto flex-1">
@@ -148,6 +152,24 @@ function EventManager() {
               </div>
               <div className="w-[200px] text-center">
                 {formatEventDates(event.date.start, event.date?.end)}
+              </div>
+              <div className="w-[200px] text-center pl-5">
+                {" "}
+                <Link
+                  to={`gallery/${event._id}`}
+                  className="px-4 py-2 rounded-lg bg-blue-500 text-white text-lg font-medium"
+                >
+                  Gallery
+                </Link>{" "}
+              </div>
+              <div className="w-[200px] text-center pl-5">
+                {" "}
+                <Link
+                  to={`registrations/${event._id}`}
+                  className="px-4 py-2 rounded-lg bg-blue-500 text-white text-lg font-medium"
+                >
+                  Registrations
+                </Link>{" "}
               </div>
               <div className="w-[120px] text-center flex items-center justify-center gap-2">
                 <Link

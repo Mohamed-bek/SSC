@@ -79,16 +79,16 @@ const ParticipantForm = () => {
   return (
     <div className="w-full px-5 min-h-[calc(100dvh-82px)] flex justify-center items-center relative">
       <ToastContainer theme="dark" />
-      <div className="w-full max-w-md bg-white/5 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/20 p-8">
+      <div className="w-full max-w-md bg-white/5 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/20 p-3 pt-5 md:p-8">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="text-center mb-6">
-            <h2 className="text-4xl scale-y-150 tracking-wider font-bold  font-luckiest text-primary">
+            <h2 className="text-4xl scale-y-150 tracking-wider font-bold  font-luckiest text-secondary">
               Join Us
             </h2>
           </div>
 
           <div>
-            <div className="flex justify-center gap-2 items-start mb-5">
+            <div className="flex justify-center gap-2 items-start mb-2 md:mb-5">
               {/* Image Upload */}
               <div className="flex w-[100px] md:w-1/2 flex-col items-center">
                 <label htmlFor="image" className="cursor-pointer group">
@@ -126,13 +126,11 @@ const ParticipantForm = () => {
                   onChange={handleImageChange}
                   className="hidden"
                 />
-                <span className="mt-2 text-white/70 text-sm">
-                  Profile Picture (Optional)
-                </span>
+                <span className="mt-2 text-white/70 text-xs">(Optional)</span>
               </div>
 
               {/* Name Inputs */}
-              <div className="flex-1">
+              <div className="flex-1 -mt-5">
                 <div className="w-full mb-3">
                   <label
                     htmlFor="firstName"
@@ -161,7 +159,7 @@ const ParticipantForm = () => {
                       name="firstName"
                       value={formData.firstName}
                       onChange={handleInputChange}
-                      placeholder="John"
+                      placeholder="First Name"
                       className="w-full pl-10 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
                       required
                     />
@@ -195,7 +193,7 @@ const ParticipantForm = () => {
                       name="lastName"
                       value={formData.lastName}
                       onChange={handleInputChange}
-                      placeholder="Doe"
+                      placeholder="Last Name"
                       className="w-full pl-10 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
                       required
                     />
@@ -205,10 +203,10 @@ const ParticipantForm = () => {
             </div>
             <div>
               {/* Email */}
-              <div>
+              <div className="mb-2">
                 <label
                   htmlFor="email"
-                  className="block text-sm text-white/80 mb-2"
+                  className="block text-sm text-white/80 mb-1"
                 >
                   Email
                 </label>
@@ -233,7 +231,7 @@ const ParticipantForm = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    placeholder="john.doe@example.com"
+                    placeholder="email@example.com"
                     className="w-full pl-10 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
                     required
                   />
@@ -241,10 +239,10 @@ const ParticipantForm = () => {
               </div>
 
               {/* Phone Number */}
-              <div>
+              <div className="mb-2">
                 <label
                   htmlFor="phoneNumber"
-                  className="block text-sm text-white/80 mb-2"
+                  className="block text-sm text-white/80 mb-1"
                 >
                   Phone Number (Optional)
                 </label>

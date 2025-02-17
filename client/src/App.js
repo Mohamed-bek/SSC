@@ -7,14 +7,12 @@ import ParticipantForm from "./pages/ParticipantForm";
 import Members from "./pages/Members";
 import Login from "./pages/Admin/Login";
 import ParticipantsList from "./pages/Admin/Participants";
-import Stars from "./components/Stars";
 import "react-toastify/dist/ReactToastify.css";
 import Events from "./pages/Events";
 import EventDetail from "./pages/Event";
 import Projects from "./pages/Projects";
 import Departements from "./pages/Departements";
 import Dashboard from "./pages/Admin/Dashboard";
-import { useAdminContext } from "./context/Admin";
 import Statistics from "./pages/Admin/Statistics";
 import AddEvent from "./pages/Admin/AddEvent";
 import ClubMembers from "./pages/Admin/ClubMembers";
@@ -33,6 +31,11 @@ import AddProject from "./pages/Admin/AddProject";
 import ProjectUpdate from "./pages/Admin/ProjectUpdate";
 import MemberUpdate from "./pages/Admin/MemberUpdate";
 import EventUpdate from "./pages/Admin/EventUpdate";
+import Gallery from "./pages/Gallery";
+import AdminGallery from "./pages/Admin/AdminGallery";
+import RegistrationList from "./pages/Admin/Registrations";
+import Analytics from "./pages/Admin/Analytics";
+import axios from "axios";
 
 function App() {
   const navigate = useNavigate();
@@ -57,8 +60,10 @@ function App() {
           <Route path="/events" element={<Events />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/departements" element={<Departements />} />
+          <Route path="/gallery/:id" element={<Gallery />} />
           <Route path="/dashboard" element={<Dashboard />}>
             <Route path="" element={<Statistics />} />
+            <Route path="analytics" element={<Analytics />} />
             <Route path="partcipants" element={<ParticipantsList />} />
             <Route path="manage-members" element={<AdminMember />}>
               <Route path="" element={<ClubMembers />} />
@@ -77,6 +82,8 @@ function App() {
               <Route path="" element={<EventManager />} />
               <Route path="add-event" element={<AddEvent />} />
               <Route path="update-event/:id" element={<EventUpdate />} />
+              <Route path="gallery/:id" element={<AdminGallery />} />
+              <Route path="registrations/:id" element={<RegistrationList />} />
             </Route>
             <Route path="manage-projects" element={<AdminProject />}>
               <Route path="" element={<ProjectManager />} />

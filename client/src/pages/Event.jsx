@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaCalendar, FaLocationDot } from "react-icons/fa6";
-import { useParams } from "react-router-dom";
-import { format } from "date-fns";
+import { useParams, Link } from "react-router-dom";
 import EventRegistration from "../components/EventRegistration";
 import Loader from "../components/Loader";
 import axios from "axios";
@@ -52,7 +51,6 @@ const EventDetail = () => {
       const hours = Math.floor((timeDiff / (1000 * 60 * 60)) % 24);
       const minutes = Math.floor((timeDiff / (1000 * 60)) % 60);
       const seconds = Math.floor((timeDiff / 1000) % 60);
-
       setTimeLeft({
         days,
         hours,
@@ -66,12 +64,6 @@ const EventDetail = () => {
     return () => clearInterval(interval);
   }, [event]);
 
-  const formatDate = (date) => {
-    if (!date) return "Unknown date";
-    const parsedDate = new Date(date);
-    if (isNaN(parsedDate)) return "Invalid date";
-    return format(parsedDate, "dd MMMM yyyy");
-  };
   const formatEventDates = (startDate, endDate) => {
     const start = new Date(startDate);
     const end = endDate ? new Date(endDate) : null;
@@ -120,9 +112,12 @@ const EventDetail = () => {
           className="w-full h-full object-cover"
         />
         {isEventPassed ? (
-          <div className="absolute top-3 right-10 z-40 px-4 py-2 bg-secondary text-therd rounded-md text-lg font-medium">
+          <Link
+            to={`/gallery/${event._id}`}
+            className="absolute top-3 right-10 z-40 px-4 py-2 bg-secondary text-therd rounded-md text-lg font-medium"
+          >
             Event Completed
-          </div>
+          </Link>
         ) : (
           <button
             onClick={() => setVisible(true)}
@@ -132,17 +127,22 @@ const EventDetail = () => {
             Register{" "}
           </button>
         )}
-        <div className="h-fit pt-2.5 md:pt-10 pb-1 md:pb-4 rounded-lg text-center font-luckiest flex items-center justify-around mx-auto max-w-5xl w-[90%] absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 z-30 shadow-lg bg-secondary text-therd">
+        <div className="h-[80px] md:h-[100px] rounded-lg text-center font-luckiest  max-w-5xl w-[90%] absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 z-30 shadow-lg bg-secondary text-therd">
           {isEventPassed ? (
-            <h2 className="text-red-500 text-xl md:text-4xl font-semibold font-inter  -mt-6">
+            <h2 className="text-red-500 text-xl md:text-4xl font-semibold font-inter capitalize  h-full flex justify-center items-center">
               {" "}
               This event has ended. Stay tuned for more!{" "}
             </h2>
+          ) : timeLeft === -1 ? (
+            <h2 className="text-green-600 text-xl md:text-4xl font-semibold font-inter capitalize h-full flex justify-center items-center">
+              {" "}
+              This event is ongoing ,don't miss out!
+            </h2>
           ) : (
-            <>
-              <div className="px-2 md:px-5">
+            <div className="flex items-center justify-around h-full md:pt-6">
+              <div className="px-2  md:px-5">
                 <h2 className="text-4xl md:text-[4rem] font-luckiest tracking-wider scale-110">
-                  {timeLeft?.days}
+                  {timeLeft?.days || "20"}
                 </h2>
                 <h3 className="text-sm md:text-lg scale-y-125 -mt-2 md:mt-1">
                   {" "}
@@ -176,7 +176,7 @@ const EventDetail = () => {
                   Seconds{" "}
                 </h3>
               </div>
-            </>
+            </div>
           )}
         </div>
       </div>

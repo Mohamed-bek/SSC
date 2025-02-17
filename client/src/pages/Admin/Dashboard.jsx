@@ -7,6 +7,7 @@ import { useAdminContext } from "../../context/Admin";
 import { FaFolderClosed } from "react-icons/fa6";
 import { useEffect } from "react";
 import DeletePopup from "../../components/DeletePopup";
+import { IoStatsChartSharp } from "react-icons/io5";
 
 const Dashboard = () => {
   const { admin, logout } = useAdminContext();
@@ -30,30 +31,36 @@ const Dashboard = () => {
     },
     {
       id: 1,
+      name: "Analytics",
+      icon: <IoStatsChartSharp />,
+      href: "/analytics",
+    },
+    {
+      id: 2,
       name: "Members",
       icon: <FaUsers />,
       href: "/manage-members",
     },
     {
-      id: 2,
+      id: 3,
       name: "Participants",
       icon: <FaUserGraduate />,
       href: "/partcipants",
     },
     {
-      id: 3,
+      id: 4,
       name: "Departments",
       icon: <FaBuilding />,
       href: "/manage-departments",
     },
     {
-      id: 4,
+      id: 5,
       name: "Events",
       icon: <MdEvent />,
       href: "/manage-events",
     },
     {
-      id: 5,
+      id: 6,
       name: "Projects",
       icon: <FaFolderClosed />,
       href: "/manage-projects",
@@ -71,13 +78,13 @@ const Dashboard = () => {
         />
       )}
       <div className="h-full w-full flex items-center flex-wrap">
-        <div className="w-[76px] bg-therd linksContainer overflow-hidden hover:w-[280px] duration-500 h-full flex justify-center items-center">
+        <div className="w-[76px] bg-therd linksContainer overflow-hidden hover:w-[250px] duration-500 h-full flex justify-center items-center">
           <div className="w-full h-fit ">
             {links &&
               links.map((link) => (
                 <NavLink
                   key={link.id}
-                  className="dashLink flex justify-center items-center w-fit px-5 py-2.5 gap-5 z-10"
+                  className="dashLink flex justify-center items-center w-fit px-5 py-2.5 gap-5 z-10 mb-3"
                   to={"/dashboard" + link.href}
                   end
                 >

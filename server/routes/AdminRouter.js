@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   AddAdmin,
   GetAnalytics,
+  GetAnalyticsOfCharts,
   GetData,
   Login,
   LogOut,
@@ -19,5 +20,10 @@ AdminRouter.post("/logout", LogOut);
 AdminRouter.put("/", authenticateToken, UpdateAvatar);
 AdminRouter.get("/statics", authenticateToken, GetData);
 AdminRouter.get("/analytics", authenticateToken, GetAnalytics);
+AdminRouter.get(
+  "/dashboard-analytics",
+  // authenticateToken,
+  GetAnalyticsOfCharts
+);
 
 export default AdminRouter;

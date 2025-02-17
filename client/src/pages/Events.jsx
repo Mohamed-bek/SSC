@@ -32,18 +32,18 @@ function Events() {
     GetEvents();
   }, [type]);
   return (
-    <div className="min-h-[calc(100dvh-82px)] w-full bg-therd pt-10">
+    <div className="min-h-[calc(100dvh-82px)] w-full bg-therd pt-2 md:pt-10">
       <div className="w-full px-4 mx-auto md:w-[90%] pb-10">
         {isLoading && <Loader />}
         <div className="text-center mb-0 items-center flex justify-between mx-auto">
           <div>
-            <h1 className="PageHeader !text-5xl">Our Art</h1>
+            <h1 className="PageHeader !text-3xl  md:!text-5xl">Our Events</h1>
           </div>
           <div className="mb-6">
             <select
               value={type}
               onChange={(e) => setType(e.target.value)}
-              className="focus:outline-none w-[180px] mb-4 font-medium px-3 py-2 text-therd bg-grayColor rounded-lg"
+              className="focus:outline-none w-[140px] md:w-[180px] mt-2 md:mb-4 font-medium px-3 py-2 text-therd bg-grayColor rounded-lg"
             >
               <option value=""> All </option>
               <option value="upcoming"> Upcoming </option>

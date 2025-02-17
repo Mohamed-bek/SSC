@@ -35,14 +35,16 @@ const Members = () => {
   }, [searchTerm]);
 
   return (
-    <div className="min-h-[calc(100dvh-82px)] px-4 sm:px-6 bg-therd pt-10">
+    <div className="min-h-[calc(100dvh-82px)] px-4 sm:px-6 bg-therd pt-3 md:pt-10">
       {isLoading && <Loader />}
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-0 items-center flex justify-between">
+      <div className="w-full md:w-[90%] mx-auto">
+        <div className="text-center items-center flex flex-col md:flex-row justify-between mb-4">
           <div>
-            <h1 className="PageHeader !text-5xl">Our Amazing Team</h1>
+            <h1 className="PageHeader !text-3xl md:!text-5xl">
+              Our Amazing Team
+            </h1>
           </div>
-          <div className="mb-6">
+          <div className="-mt-4 md:mt-0 md:mb-6">
             <InputFieldCustom
               placeholder="Search By Name..."
               type="search"
@@ -57,7 +59,7 @@ const Members = () => {
             No members found
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 pb-10 justify-center w-fit mx-auto md:mx-0  md:justify-start ">
+          <div className="flex justify-center flex-wrap md:justify-start items-stretch gap-5">
             {members.map((member) => (
               <MemberCard member={member} key={member._id} />
             ))}

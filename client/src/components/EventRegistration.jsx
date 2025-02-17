@@ -35,9 +35,10 @@ function EventRegistration({ event, setVisible, setLoading }) {
       setLoading(false);
     }
   };
+
   const handelCancel = () => {
-    ImageRef.current.classList.add("translate-x-1/2");
-    FormRef.current.classList.add("-translate-x-1/2");
+    ImageRef.current.classList.add("lg:translate-x-1/2");
+    FormRef.current.classList.add("lg:-translate-x-1/2");
     CloseRef.current.classList.add("hidden");
     setTimeout(() => {
       RegistrationRef.current.classList.add("scale-0");
@@ -60,11 +61,14 @@ function EventRegistration({ event, setVisible, setLoading }) {
         </button>
         <div
           ref={ImageRef}
-          className="w-1/2 rounded-lg overflow-hidden duration-300 z-10"
+          className="w-1/2 hidden lg:block rounded-lg overflow-hidden duration-300 z-10"
         >
           <img className="w-full h-full object-cover" src={event?.image} />
         </div>
-        <div ref={FormRef} className="w-1/2 px-10 py-10 bg-therd duration-300">
+        <div
+          ref={FormRef}
+          className="w-full rounded-lg lg:rounded-none lg:w-1/2 px-10 py-10 bg-therd duration-300"
+        >
           <h2 className="text-3xl mb-3 font-bold text-center">
             {" "}
             Welcome To {event?.title}

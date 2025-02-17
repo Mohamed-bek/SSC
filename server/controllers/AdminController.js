@@ -8,7 +8,10 @@ import Participant from "../models/Participant.js";
 import Project from "../models/Project.js";
 import Event from "../models/Event.js";
 import jwt from "jsonwebtoken";
-import generateMonthlyData from "../utilitis/Analytics.js";
+import {
+  generateMonthlyData,
+  generateCumulativeMonthlyData,
+} from "../utilitis/Analytics.js";
 
 export const AddAdmin = async (req, res) => {
   try {
@@ -64,6 +67,7 @@ export const Login = async (req, res) => {
 export const RefreshToken = (req, res) => {
   try {
     const { refreshToken } = req.cookies;
+
     if (!refreshToken)
       return res.status(401).json({ error: "The Resfresh Not Found" });
     jwt.verify(
@@ -73,6 +77,9 @@ export const RefreshToken = (req, res) => {
         if (err) return res.status(403).json({ error: err });
         const adminId = adminData.id;
         const admin = await Admin.findById(adminId);
+        console.log("Admin :", admin);
+        console.log("admin.refreshToken :", admin.refreshToken);
+        console.log("refreshToken :", refreshToken);
         if (!admin || admin.refreshToken !== refreshToken)
           return res
             .status(403)
@@ -89,10 +96,16 @@ export const RefreshToken = (req, res) => {
           secure: process.env.NODE_ENV === "production",
           maxAge: 7 * 24 * 60 * 60 * 1000,
         });
+        const { firstName, lastName, email, _id } = admin;
 
         res.status(200).json({
           message: "Refresh token Succeeded",
-          admin,
+          admin: {
+            firstName,
+            lastName,
+            email,
+            _id,
+          },
           accessToken: newTokens.accessToken,
         });
       }
@@ -178,9 +191,197 @@ export const GetData = async (req, res) => {
 
 export const GetAnalytics = async (req, res) => {
   try {
-    const data = await generateMonthlyData(Member, 6);
+    const data = await generateCumulativeMonthlyData(Member, 6);
     res.status(200).json({ ...data });
   } catch (error) {
     res.status({ message: "Faild To Get Data", err: error.message });
+  }
+};
+
+async function getVisitorAnalytics(month = 6) {
+  const endDate = new Date();
+  const startDate = new Date();
+  startDate.setMonth(startDate.getMonth() - month);
+
+  // First get monthly new visitors based on creation date
+  const newVisitors = await Visitor.aggregate([
+    {
+      $match: {
+        createdAt: {
+          $gte: startDate,
+          $lte: endDate,
+        },
+      },
+    },
+    {
+      $group: {
+        _id: {
+          year: { $year: "$createdAt" },
+          month: { $month: "$createdAt" },
+        },
+        newVisitors: { $sum: 1 },
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        month: {
+          $concat: [
+            { $toString: "$_id.year" },
+            "-",
+            {
+              $cond: {
+                if: { $lt: ["$_id.month", 10] },
+                then: { $concat: ["0", { $toString: "$_id.month" }] },
+                else: { $toString: "$_id.month" },
+              },
+            },
+          ],
+        },
+        newVisitors: 1,
+      },
+    },
+  ]);
+
+  // Then get monthly visits and active visitors
+  const visitStats = await Visitor.aggregate([
+    {
+      $unwind: "$visits",
+    },
+    {
+      $match: {
+        "visits.timestamp": {
+          $gte: startDate,
+          $lte: endDate,
+        },
+      },
+    },
+    {
+      $group: {
+        _id: {
+          year: { $year: "$visits.timestamp" },
+          month: { $month: "$visits.timestamp" },
+        },
+        uniqueVisitors: { $addToSet: "$visitorId" },
+        totalVisits: { $sum: 1 },
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        month: {
+          $concat: [
+            { $toString: "$_id.year" },
+            "-",
+            {
+              $cond: {
+                if: { $lt: ["$_id.month", 10] },
+                then: { $concat: ["0", { $toString: "$_id.month" }] },
+                else: { $toString: "$_id.month" },
+              },
+            },
+          ],
+        },
+        totalVisits: 1,
+        activeVisitors: { $size: "$uniqueVisitors" },
+      },
+    },
+  ]);
+
+  // Get array of last 6 months
+  const months = getLastSixMonths(month);
+
+  // Combine both stats and fill in missing months
+  const filledMonthlyStats = months.map((month) => {
+    const visits = visitStats.find((item) => item.month === month) || {
+      totalVisits: 0,
+      activeVisitors: 0,
+    };
+    const visitors = newVisitors.find((item) => item.month === month) || {
+      newVisitors: 0,
+    };
+
+    return {
+      month,
+      totalVisits: visits.totalVisits,
+      uniqueVisitors: Math.max(visits.activeVisitors, visitors.newVisitors), // Take the higher number
+    };
+  });
+
+  // Calculate summary
+  const summary = {
+    totalVisitsAllTime: filledMonthlyStats.reduce(
+      (sum, month) => sum + month.totalVisits,
+      0
+    ),
+    totalUniqueVisitors: await Visitor.countDocuments({
+      createdAt: { $gte: startDate, $lte: endDate },
+    }),
+  };
+
+  return {
+    monthlyStats: filledMonthlyStats,
+    summary,
+  };
+}
+function getLastSixMonths(month) {
+  const months = [];
+  const date = new Date();
+
+  for (let i = 0; i < month; i++) {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    months.unshift(`${year}-${month}`);
+    date.setMonth(date.getMonth() - 1);
+  }
+
+  return months;
+}
+
+async function GetMemberAnalytics() {
+  const MemberAnalytics = await Member.aggregate([
+    {
+      $group: {
+        _id: "$department",
+        count: { $sum: 1 },
+      },
+    },
+    {
+      $lookup: {
+        from: "departments", // The name of the collection in MongoDB
+        localField: "_id",
+        foreignField: "_id",
+        as: "departmentInfo",
+      },
+    },
+    {
+      $unwind: "$departmentInfo", // Extract department details
+    },
+    {
+      $project: {
+        _id: 0, // Remove the department ID from the response
+        department: "$departmentInfo.name", // Get the department name
+        count: 1,
+      },
+    },
+  ]);
+
+  return MemberAnalytics;
+}
+
+export const GetAnalyticsOfCharts = async (req, res) => {
+  try {
+    const [MemberAnalytics, VisitorAnalytics, ProjectAnalytics] =
+      await Promise.all([
+        GetMemberAnalytics(),
+        getVisitorAnalytics(12),
+        generateMonthlyData(Project),
+      ]);
+
+    res
+      .status(200)
+      .json({ MemberAnalytics, VisitorAnalytics, ProjectAnalytics });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };

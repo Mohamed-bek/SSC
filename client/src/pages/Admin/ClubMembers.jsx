@@ -112,7 +112,7 @@ const ClubMembers = () => {
   };
 
   return (
-    <div className="flex flex-col gap-3 h-full">
+    <div className="flex flex-col gap-3 w-full h-full !justify-between">
       {selectedUser && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[99]">
           <div className="user-card-overlay">
@@ -121,7 +121,7 @@ const ClubMembers = () => {
         </div>
       )}
       {loading && <Loader />}
-      <ToastContainer theme="dark" />
+
       {popup && (
         <DeletePopup
           cancel={cancelDelete}
@@ -131,39 +131,42 @@ const ClubMembers = () => {
         />
       )}
 
-      <div className="w-full bg-therd rounded-lg flex items-center justify-between px-5 py-2">
-        <div className="flex items-center gap-2">
-          <InputFieldCustom
-            type="text"
-            value={searchQuery}
-            setValue={handleSearchChange}
-            placeholder="Search by title..."
-            name="searchQuery"
-            styles="!w-[250px] !py-1.5"
-          />
-          <select
-            className="w-full px-4 py-2 border border-white/10 bg-grayColor rounded-lg text-therd focus:outline-none"
-            placeholder="Select Department"
-            value={department}
-            name="department"
-            onChange={(e) => setDepartment(e.target.value)}
+      <div>
+        <ToastContainer theme="dark" />
+        <div className="w-full bg-therd rounded-lg flex items-center my-0 justify-between px-5 py-2">
+          <div className="flex items-center gap-2">
+            <InputFieldCustom
+              type="text"
+              value={searchQuery}
+              setValue={handleSearchChange}
+              placeholder="Search by title..."
+              name="searchQuery"
+              styles="!w-[250px] !py-1.5"
+            />
+            <select
+              className="w-full px-4 py-2 border border-white/10 bg-grayColor rounded-lg text-therd focus:outline-none"
+              placeholder="Select Department"
+              value={department}
+              name="department"
+              onChange={(e) => setDepartment(e.target.value)}
+            >
+              <option value=""> Search By Department</option>
+              {departments.map((department) => (
+                <option key={department._id} value={department._id}>
+                  {" "}
+                  {department.name}{" "}
+                </option>
+              ))}
+            </select>
+          </div>
+          <Link
+            to="add-member"
+            className="flex bg-secondary items-center gap-2 text-lg font-semibold rounded-xl px-4 py-2 text-therd"
           >
-            <option value=""> Search By Department</option>
-            {departments.map((department) => (
-              <option key={department._id} value={department._id}>
-                {" "}
-                {department.name}{" "}
-              </option>
-            ))}
-          </select>
+            {" "}
+            <FaPlus /> <span>Add Member </span>
+          </Link>
         </div>
-        <Link
-          to="add-member"
-          className="flex bg-secondary items-center gap-2 text-lg font-semibold rounded-xl px-4 py-2 text-therd"
-        >
-          {" "}
-          <FaPlus /> <span>Add Member </span>
-        </Link>
       </div>
 
       <div className="flex-1 bg-therd rounded-lg overflow-hidden flex flex-col ">

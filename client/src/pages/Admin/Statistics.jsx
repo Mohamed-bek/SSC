@@ -46,6 +46,7 @@ function Statistics() {
         const { data } = await API.get(
           `${process.env.REACT_APP_API_URL}analytics`
         );
+        console.log("Analytics : ", data);
         setAnalytics(data);
       } catch (error) {
         console.log(error);
@@ -69,12 +70,12 @@ function Statistics() {
     labels: analytics.months,
     datasets: [
       {
-        label: "User ",
+        label: "Members",
         data: analytics.counts,
-        backgroundColor: "#dfc0ff",
-        borderColor: "#dfc0ff",
-        borderWidth: 3,
-        barThickness: 30,
+        borderColor: "#ffffff",
+        borderWidth: 1,
+        pointRadius: 0,
+        pointHoverRadius: 0,
       },
     ],
   };
@@ -82,48 +83,88 @@ function Statistics() {
   const options = {
     scales: {
       y: {
-        beginAtZero: true,
+        beginAtZero: false,
         grid: {
-          display: true,
-          color: "#e0c0ff32",
+          color: (context) =>
+            context.tick.value === 0 ? "#ffffff" : "transparent",
+          drawTicks: false,
+          drawBorder: true,
         },
-        ticks: {
-          color: "#dfc0ff",
-          // Change Y-axis labels color
-        },
-        borderColor: "#dfc0ff", // Y-axis line color
+        ticks: { color: "#ffffff" },
       },
       x: {
+        beginAtZero: false,
         grid: {
-          display: true,
-          color: "#e0c0ff32",
+          color: (context) =>
+            context.tick && context.index === 0 ? "#ffffff" : "transparent",
+          drawTicks: false, // Hide tick marks
+          drawBorder: true, // Keep main X-axis line
         },
-        ticks: {
-          color: "#dfc0ff", // Change Y-axis labels color
-        },
-        borderColor: "#dfc0ff", // Y-axis line color
+        ticks: { color: "#ffffff" },
       },
     },
   };
 
+  // <ChartComponent data={data} options={options} type="line" />;
+
+  // const data = {
+  //   labels: analytics.months,
+  //   datasets: [
+  //     {
+  //       label: "Members",
+  //       data: analytics.counts,
+  //       backgroundColor: "#ffffff",
+  //       borderColor: "#ffffff",
+  //       borderWidth: 3,
+  //       barThickness: 30,
+  //     },
+  //   ],
+  // };
+
+  // const options = {
+  //   scales: {
+  //     y: {
+  //       beginAtZero: true,
+  //       grid: {
+  //         display: true,
+  //         color: "#ffffff4f",
+  //       },
+  //       ticks: {
+  //         color: "#ffffff",
+  //       },
+  //       borderColor: "#ffffff",
+  //     },
+  //     x: {
+  //       grid: {
+  //         display: true,
+  //         color: "#ffffff4f",
+  //       },
+  //       ticks: {
+  //         color: "#ffffff",
+  //       },
+  //       borderColor: "#ffffff",
+  //     },
+  //   },
+  // };
+
   return (
-    <div className="w-full h-full p-3 relative">
-      <div className="py-2 px-5 rounded-lg bg-therd text-secondary shadow-sm flex justify-between items-center mb-3">
+    <div className="w-full h-full p-3 flex flex-col relative gap-3">
+      <div className="py-2 px-5 rounded-lg bg-therd text-secondary shadow-sm flex justify-between items-center">
         <div>
           <h2 className="text-xl font-bold mb-0.5">
             Welcome Back, {admin?.firstName}
           </h2>
           <p className="text-sm font-light"> Let's Do Some Work Today... </p>
         </div>
-        <div className="w-16 h-16 rounded-full overflow-hidden bg-grayColor text-therd">
+        <div className="w-14 h-14 rounded-full overflow-hidden bg-grayColor text-therd">
           <img
-            className="w-full h-full object-cover"
+            className="h-full object-contain"
             alt={admin?.firstName || "Admin"}
-            src={admin?.image}
+            src="/logo.png"
           />
         </div>
       </div>
-      <div className="w-full flex justify-between items-center gap-3 mb-3">
+      <div className="w-full flex justify-between items-center gap-3">
         <div className="bg-therd flex justify-between  flex-1 items-start p-4 rounded-lg">
           <div>
             <h3 className="font-bold text-3xl mb-0.5">
@@ -175,13 +216,14 @@ function Statistics() {
           {/* <img className="w-14" src="/visitorsIcons.png" /> */}
         </div>
       </div>
-      <div className="flex h-[570px] items-start justify-between gap-3">
-        <div className="bg-therd  flex-[2] h-full flex justify-center items-center rounded-lg p-4">
+      <div className="flex flex-1 items-start justify-between gap-3">
+        <div className="bg-therd  flex-[2] h-full rounded-lg p-4">
           {" "}
+          <h1 className="PageHeader !text-5xl !pt-8"> Members Chart </h1>
           <ChartComponent data={data} options={options} type="line" />{" "}
         </div>
         <div className="flex-1 flex flex-col justify-between items-stretch h-full gap-3">
-          <div className="bg-therd rounded-lg p-6 cursor-pointer group relative overflow-hidden flex-1">
+          <div className="bg-therd rounded-lg p-6 cursor-pointer group relative overflow-hidden flex-[1.4]">
             <div className="absolute right-0 top-0 w-32 h-32 bg-[#e0c0ff32] rounded-full -translate-y-1/2 translate-x-1/2" />
 
             <div className="relative">

@@ -125,7 +125,7 @@ function HeaderHome() {
   };
 
   return (
-    <div className="bg-therd py-4  w-full flex justify-between items-center px-5 md:px-10 text-secondary MainHeaderAnimation -translate-y-full z-50 relative">
+    <div className="bg-therd py-3 md:py-4  w-full flex justify-between items-center px-5 md:px-10 text-secondary MainHeaderAnimation -translate-y-full z-50 relative">
       <Link to="/" className="logo text-[3rem]">
         <img
           loading="lazy"
@@ -157,7 +157,7 @@ function HeaderHome() {
           </NavLink>
         ))}
       </nav>
-      <div className="hidden md:flex justify-center items-center gap-5">
+      <div className=" md:flex justify-center items-center gap-5">
         <CustomButton
           link="/join-us"
           text="Join Us"

@@ -5,7 +5,7 @@ function CustomButton({ text, linkStyle, spanStyle, link = null }) {
   return (
     <Link
       to={link || null}
-      className={`group relative w-fit block font-semibold text-xl py-2 font-inter px-6 border-[2px] ${linkStyle} cursor-pointer rounded-full overflow-hidden  duration-300`}
+      className={`group relative w-fit block font-semibold text-xl py-1.5 md:py-2 font-inter px-6 border-[2px] ${linkStyle} cursor-pointer rounded-full overflow-hidden  duration-300`}
     >
       <span className="relative z-10">{text}</span>
       <span

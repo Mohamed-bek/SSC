@@ -12,6 +12,7 @@ import EventRouter from "./routes/EventRouter.js";
 import VisitorRouter from "./routes/VisitorRouter.js";
 import DepartmentRouter from "./routes/DepartmentRouter.js";
 import RegistrationRouter from "./routes/RegistrationRouter.js";
+import GalleryRouter from "./routes/GelleryRouter.js";
 
 dotenv.config();
 
@@ -57,6 +58,7 @@ app.use("/event", EventRouter);
 app.use("/visitor", VisitorRouter);
 app.use("/department", DepartmentRouter);
 app.use("/registration", RegistrationRouter);
+app.use("/gallery", GalleryRouter);
 app.use(AdminRouter);
 
 const MONGO_URL = process.env.MONGO_URL;
@@ -66,8 +68,6 @@ mongoose
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("MongoDB connection error:", err));
 const PORT = process.env.PORT || 8000;
-// app.listen(PORT, () => {
-//   console.log(`Server running on http://localhost:${PORT}`);
-// });
-
-export default app;
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});

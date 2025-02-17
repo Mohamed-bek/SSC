@@ -61,17 +61,17 @@ function Projects() {
   }, [projects]);
 
   return (
-    <div className="w-full min-h-[calc(100dvh-82px)] bg-therd py-10">
+    <div className="w-full min-h-[calc(100dvh-82px)] bg-therd py-3 md:py-10">
       {isLoading && <Loader />}
       <div className="text-center mb-0 items-center flex justify-between w-[90%] mx-auto">
         <div>
-          <h1 className="PageHeader !text-5xl">Our Art</h1>
+          <h1 className="PageHeader !text-3xl md:!text-5xl">Our Art</h1>
         </div>
-        <div className="mb-6">
+        <div className="mb-3 md:mb-6">
           <InputFieldCustom
             placeholder="Search By Title..."
             type="search"
-            styles={"!max-w-[400px]"}
+            styles={"!w-[150px] md:!max-w-[400px]"}
             value={searchTerm}
             setValue={(e) => setSearchTerm(e.target.value)}
           />

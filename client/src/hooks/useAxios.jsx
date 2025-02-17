@@ -33,8 +33,7 @@ const useAxios = () => {
               process.env.REACT_APP_API_URL + "refresh",
               { withCredentials: true }
             );
-            setAccessToken(data.accessToken); // Update Zustand state
-
+            setAccessToken(data.accessToken);
             // Retry the failed request with new token
             error.config.headers.Authorization = `Bearer ${data.accessToken}`;
             return API(error.config);

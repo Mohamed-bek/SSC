@@ -33,7 +33,7 @@ function Departements() {
       responsibilities: [
         "Organizing informative sessions on relevant topics",
         "Conducting hands-on workshops to develop technical skills.",
-        " Offering structured training programs for in-depth learning.",
+        "Offering structured training programs for in-depth learning.",
         "Encouraging collaboration and mentorship among members.",
       ],
       image: "/workshop.jpg",

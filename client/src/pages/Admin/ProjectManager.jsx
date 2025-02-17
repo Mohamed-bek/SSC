@@ -62,7 +62,6 @@ function ProjectManager() {
   };
   return (
     <div className="w-full h-full rounded-lg flex flex-col gap-3">
-      <ToastContainer theme="dark" />
       {loading && <Loader />}
       {popup && (
         <DeletePopup
@@ -72,15 +71,18 @@ function ProjectManager() {
           subText={`Are you sure you want to delete ${projectToDelete.title} project`}
         />
       )}
-      <div className="flex justify-between items-center px-4 py-3 rounded-lg  bg-therd">
-        <h1 className="text-2xl text-secondary font-medium"> Projects </h1>
-        <Link
-          to="add-project"
-          className="flex bg-secondary items-center gap-2 text-lg font-semibold rounded-xl px-4 py-2 text-therd"
-        >
-          {" "}
-          <FaPlus /> <span>Add Project </span>
-        </Link>
+      <div className="">
+        <ToastContainer theme="dark" />
+        <div className="flex justify-between items-center px-4 py-3 rounded-lg  bg-therd">
+          <h1 className="text-2xl text-secondary font-medium"> Projects </h1>
+          <Link
+            to="add-project"
+            className="flex bg-secondary items-center gap-2 text-lg font-semibold rounded-xl px-4 py-2 text-therd"
+          >
+            {" "}
+            <FaPlus /> <span>Add Project </span>
+          </Link>
+        </div>
       </div>
       <div className="flex-1 bg-therd rounded-lg overflow-hidden">
         <header className="flex items-center text-secondary justify-between p-4 bg-therd border-b border-grayColor">

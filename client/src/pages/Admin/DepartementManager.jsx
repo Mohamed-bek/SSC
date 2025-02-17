@@ -57,16 +57,22 @@ function DepartementManager() {
   return (
     <div className="w-full h-full rounded-lg flex flex-col gap-3 relative">
       {loading && <Loader />}
-      <ToastContainer theme="dark" />
-      <div className="flex justify-between items-center px-4 py-3 rounded-lg  bg-therd">
-        <h1 className="text-2xl text-secondary font-medium"> Departements </h1>
-        <Link
-          to="add-department"
-          className="flex bg-secondary items-center gap-2 text-lg font-semibold rounded-xl px-4 py-2 text-therd"
-        >
-          {" "}
-          <FaPlus /> <span>Add Departement </span>
-        </Link>
+
+      <div>
+        <ToastContainer theme="dark" />
+        <div className="flex justify-between items-center px-4 py-3 rounded-lg  bg-therd">
+          <h1 className="text-2xl text-secondary font-medium">
+            {" "}
+            Departements{" "}
+          </h1>
+          <Link
+            to="add-department"
+            className="flex bg-secondary items-center gap-2 text-lg font-semibold rounded-xl px-4 py-2 text-therd"
+          >
+            {" "}
+            <FaPlus /> <span>Add Departement </span>
+          </Link>
+        </div>
       </div>
       {popup && (
         <DeletePopup

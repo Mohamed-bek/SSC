@@ -68,6 +68,8 @@ const ParticipantForm = () => {
       });
       setImagePreview(null);
     } catch (error) {
+      console.log("The ERror : " + error);
+      console.log(error);
       const message =
         error?.response?.data?.error?.code === 11000
           ? "You Already Registered!"

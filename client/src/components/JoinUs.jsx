@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import CustomButton from "./CustomButton";
 
 function JoinUs() {
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 0.75;
+    }
+  }, []);
   return (
     <div className=" relative min-h-dvh md:h-dvh md:pl-[10%] w-full bg-therd flex items-center pb-10 pt-20 text-secondary overflow-hidden">
       <div className=" absolute top-0 left-0 w-full h-full">
         <video
+          ref={videoRef}
           className="w-full"
           src="/start-coding-club.mp4"
           autoPlay
@@ -13,7 +21,7 @@ function JoinUs() {
           loop
         />
       </div>
-      <div className="absolute top-0 left-0 w-full h-full bg-black/30"></div>
+      <div className="absolute top-0 left-0 w-full h-full bg-black/55"></div>
       <div className="w-[90%] z-10 relative max-w-xl">
         <h2 className="text-[2.1rem] uppercase text-center  mx-auto md:mx-0 md:text-left sm:text-5xl w-fit leading-[2rem] lg:text-[4.5rem] flex items-center justify-center mb-5 md:mb-8 font-light scale-y-[1.5] tracking-normal  lg:leading-[4rem] font-luckiest text-wrap md:text-nowrap">
           Start Coding,

@@ -26,8 +26,8 @@ function MemberCard({ member }) {
           <h2 className="text-xl font-semibold capitalize">
             {member.firstName} {member.lastName}
           </h2>
-          <h3 className="text-sm font-medium text-gray-600 mb-2 lowercase">
-            Web Developer
+          <h3 className="text-[0.85rem] font-normal text-gray-600 mb-2 lowercase">
+            {member?.work}
           </h3>
           <div className="w-full h-[1px] bg-therd"> </div>
           <div className="py-3 flex justify-center items-center gap-5">

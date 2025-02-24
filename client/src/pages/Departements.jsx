@@ -105,7 +105,7 @@ function Departements() {
         {departements.map((departement, i) => (
           <div
             ref={(el) => (departementsRef.current[i] = el)}
-            className={`flex justify-center items-center flex-col md:flex-row gap-5 md:gap-10 w-full flex-wrap mt-10`}
+            className={`flex justify-center items-center flex-col md:flex-row gap-5 md:gap-10 w-full flex-wrap lg:flex-nowrap  mt-10`}
             key={i}
             dir={i % 2 === 0 ? "ltr" : "rtl"}
           >
@@ -119,7 +119,7 @@ function Departements() {
               />
             </div>
             <div dir="ltr" className="flex-1 text-left pt-3 max-w-3xl">
-              <h3 className="text-[1.6rem] md:text-5xl scale-y-125 tracking-wide text-wrap font-luckiest textTran mb-3 flex">
+              <h3 className="text-[1.6rem] md:text-[2.75rem] lg:text-[2.9rem] scale-y-125 tracking-wide text-wrap font-luckiest textTran mb-3 flex">
                 {departement.title.split("").map((e, i) => (
                   <span
                     style={{ animationDelay: `${i * 50}ms` }}

@@ -18,7 +18,7 @@ html {
 
 @font-face {
   font-family: "Luckiest Guy";
-  src: url("./fonts/Luckiest_Guy/LuckiestGuy-Regular.ttf") format("truetype");
+  src: url("./fonts/NURA/Nura-Black.ttf") format("truetype");
 }
 
 @font-face {
@@ -265,10 +265,11 @@ body {
   text-align: center;
   /* color: var(--secondary-color); */
   font-family: "Luckiest Guy", sans-serif;
-  letter-spacing: 0.025em;
+  letter-spacing: 0.02em;
   scale: 1 1.5;
   padding-top: 20px;
   padding-bottom: 20px;
+  margin-bottom: 25px;
 }
 @media (max-width: 640px) {
   .PageHeader {

@@ -18,7 +18,9 @@ function MemberCard({ member }) {
             <div className="w-8 h-8 flex justify-center items-center pr-1.5">
               <PiBuildingOfficeFill className="block h-8 w-8" />
             </div>
-            <span>{member?.department?.name || "Devlopment"} </span>
+            <span className="text-nowrap">
+              {member?.department?.name || "Devlopment"}{" "}
+            </span>
           </div>
         </div>
 

@@ -31,15 +31,27 @@ function MemberCard({ member }) {
           </h3>
           <div className="w-full h-[1px] bg-therd"> </div>
           <div className="py-3 flex justify-center items-center gap-5">
-            <Link target="_blank" to={member?.media?.linkedin}>
+            {member?.media?.linkedin ? (
+              <Link target="_blank" to={member?.media?.linkedin}>
+                <img src="/linkedin.png" className="w-8 h-8" />
+              </Link>
+            ) : (
               <img src="/linkedin.png" className="w-8 h-8" />
-            </Link>
-            <Link target="_blank" to={member?.media?.linkedin}>
+            )}
+            {member?.media?.github ? (
+              <Link target="_blank" to={member?.media?.github}>
+                <img src="/github.png" className="w-8 h-8" />
+              </Link>
+            ) : (
               <img src="/github.png" className="w-8 h-8" />
-            </Link>
-            <Link target="_blank" to={member?.media?.linkedin}>
+            )}
+            {member?.media?.portfolio ? (
+              <Link target="_blank" to={member?.media?.portfolio}>
+                <img src="/portfolio.png" className="w-8 h-8" />
+              </Link>
+            ) : (
               <img src="/portfolio.png" className="w-8 h-8" />
-            </Link>
+            )}
           </div>
           <Link
             className="w-full SayHi py-2 text-center bg-therd gap-2 text-xl font-medium text-secondary rounded-md flex justify-center items-center"

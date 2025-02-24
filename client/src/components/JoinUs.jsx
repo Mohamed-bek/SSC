@@ -15,7 +15,7 @@ function JoinUs() {
       </div>
       <div className="absolute top-0 left-0 w-full h-full bg-black/30"></div>
       <div className="w-[90%] z-10 relative max-w-xl">
-        <h2 className="text-[2.1rem] text-center  mx-auto md:mx-0 md:text-left sm:text-5xl w-fit leading-[2rem] lg:text-[4.5rem] flex items-center justify-center mb-5 md:mb-8 font-light scale-y-[1.5] tracking-wider  lg:leading-[4rem] font-luckiest text-wrap md:text-nowrap">
+        <h2 className="text-[2.1rem] uppercase text-center  mx-auto md:mx-0 md:text-left sm:text-5xl w-fit leading-[2rem] lg:text-[4.5rem] flex items-center justify-center mb-5 md:mb-8 font-light scale-y-[1.5] tracking-normal  lg:leading-[4rem] font-luckiest text-wrap md:text-nowrap">
           Start Coding,
           <br className="hidden md:block" /> Star Leading
         </h2>

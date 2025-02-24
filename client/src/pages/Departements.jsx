@@ -62,7 +62,7 @@ function Departements() {
                 />
               </div>
               <div dir="ltr" className="flex-1 text-left pt-3 max-w-3xl">
-                <h3 className="text-[1.6rem] md:text-[2.75rem] lg:text-[2.9rem] scale-y-125 tracking-wide text-wrap font-luckiest textTran mb-3 flex">
+                <h3 className="text-[1.7rem] md:text-[2.85rem] lg:text-[3.1rem] scale-y-125 tracking-wide text-wrap font-inter uppercase font-black textTran mb-3 flex">
                   {departement?.name?.split("").map((e, i) => (
                     <span
                       style={{ animationDelay: `${i * 50}ms` }}

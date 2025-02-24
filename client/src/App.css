@@ -18,7 +18,7 @@ html {
 
 @font-face {
   font-family: "Luckiest Guy";
-  src: url("./fonts/NURA/Nura-Black.ttf") format("truetype");
+  src: url("./fonts/Roboto/Roboto-Black.ttf") format("truetype");
 }
 
 @font-face {
@@ -263,6 +263,7 @@ body {
   font-size: 4.5rem;
   line-height: 4rem;
   text-align: center;
+  text-transform: uppercase;
   /* color: var(--secondary-color); */
   font-family: "Luckiest Guy", sans-serif;
   letter-spacing: 0.02em;

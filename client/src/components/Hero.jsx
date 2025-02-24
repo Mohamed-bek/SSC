@@ -18,7 +18,7 @@ function Hero() {
         ></div>
       </div>
       <div className="text-center h-fit pt-24 px-10 p-20 relative z-40">
-        <h2 className="text-[2.1rem] sm:text-5xl md:text-[4.5rem] flex items-center justify-center mx-auto mb-12 font-light scale-y-[1.75] tracking-normal Header font-luckiest text-primary">
+        <h2 className="text-[2.1rem] uppercase sm:text-5xl md:text-[4.5rem] flex items-center justify-center mx-auto mb-12 font-light scale-y-[1.75] tracking-normal Header font-luckiest text-primary">
           {"Start Coding Club".split("").map((letter, i) => (
             <span
               key={i}

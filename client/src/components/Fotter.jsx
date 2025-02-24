@@ -21,7 +21,7 @@ function Fotter() {
             className=" h-full"
           />
           <div className="w-2 rounded-lg bg-secondary h-full"></div>
-          <h3 className="text-xl font-luckiest scale-y-150 pt-2.5 leading-5 tracking-wider">
+          <h3 className="text-xl font-luckiest scale-y-150 pt-0 uppercase leading-5 tracking-wider">
             Start
             <br />
             Coding

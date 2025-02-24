@@ -14,7 +14,7 @@ function MemberCard({ member }) {
             className="w-full h-full object-cover rounded-lg"
             loading="lazy"
           />
-          <div className="w-10 overflow-hidden flex-nowrap h-10 absolute top-2 left-2 bg-therd text-secondary flex justify-start items-center gap-1 cursor-pointer p-2 text-sm rounded-full font-medium hover:w-[200px] duration-500">
+          <div className="w-10 overflow-hidden flex-nowrap h-10 absolute top-2 left-2 bg-therd text-secondary flex justify-start items-center gap-1 cursor-pointer p-2 text-sm rounded-full font-medium hover:w-[250px] duration-500">
             <div className="w-8 h-8 flex justify-center items-center pr-1.5">
               <PiBuildingOfficeFill className="block h-8 w-8" />
             </div>

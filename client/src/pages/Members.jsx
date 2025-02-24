@@ -37,7 +37,7 @@ const Members = () => {
   return (
     <div className="min-h-[calc(100dvh-82px)] px-4 sm:px-6 bg-therd pt-3 md:pt-10">
       {isLoading && <Loader />}
-      <div className="w-full md:w-[90%] mx-auto">
+      <div className="w-full md:w-[94%] mx-auto">
         <div className="text-center items-center flex flex-col md:flex-row justify-between mb-4">
           <div>
             <h1 className="PageHeader !text-3xl md:!text-5xl">

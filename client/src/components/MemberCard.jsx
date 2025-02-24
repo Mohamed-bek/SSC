@@ -5,7 +5,7 @@ import { PiBuildingOfficeFill } from "react-icons/pi";
 
 function MemberCard({ member }) {
   return (
-    <div className="bg-secondary w-[300px] p-3 rounded-lg ">
+    <div className="bg-secondary min-w-[290px]  flex-1 max-w-[310px] p-3 rounded-lg ">
       <div className="relative">
         <div className="h-[250px] overflow-hidden bg-white rounded-lg relative">
           <img

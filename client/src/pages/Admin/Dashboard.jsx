@@ -19,7 +19,7 @@ const Dashboard = () => {
     }
   }, [admin]);
   const logOut = async () => {
-    logout();
+    await logout();
     navigate("/");
   };
   const links = [

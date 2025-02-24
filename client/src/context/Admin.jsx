@@ -24,6 +24,9 @@ export const useAdminContext = create((set) => {
           { withCredentials: true }
         );
       } catch (error) {
+        set({ admin: null, accessToken: null });
+        localStorage.removeItem("admin");
+        localStorage.removeItem("accessToken");
         console.log("Error In Logout");
       } finally {
         set({ admin: null, accessToken: null });
